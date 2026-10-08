@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/stalker.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/models/crab.glb" id="2"]
+
+[sub_resource type="CapsuleShape3D" id="CrabCollision"]
+radius = 2.3
+height = 4.6
+
+[node name="ArchiveCrab" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 1
+safe_margin = 0.04
+script = ExtResource("1")
+species = "crab"
+floor_snap_length = 0.3
+
+[node name="BodyCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("CrabCollision")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Body" parent="Visual" instance=ExtResource("2")]

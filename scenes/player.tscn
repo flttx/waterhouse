@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+
+[sub_resource type="CapsuleShape3D" id="Capsule_player"]
+radius = 0.32
+height = 1.8
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+floor_snap_length = 0.28
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("Capsule_player")
+
+[node name="Head" type="Node3D" parent="."]
+position = Vector3(0, 1.62, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 76.0
+near = 0.07
+far = 240.0
+
+[node name="Flashlight" type="SpotLight3D" parent="Head/Camera3D"]
+position = Vector3(0.19, -0.17, -0.12)
+light_color = Color(0.82, 0.88, 0.82, 1)
+light_energy = 2.25
+shadow_enabled = true
+shadow_bias = 0.06
+spot_range = 19.0
+spot_attenuation = 1.0
+spot_angle = 38.0
+spot_angle_attenuation = 1.4

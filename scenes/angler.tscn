@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/stalker.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/models/angler.glb" id="2"]
+
+[sub_resource type="SphereShape3D" id="FishCollision"]
+radius = 2.4
+
+[node name="Angler" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 1
+motion_mode = 1
+safe_margin = 0.04
+script = ExtResource("1")
+species = "angler"
+
+[node name="BodyCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("FishCollision")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Body" parent="Visual" instance=ExtResource("2")]
+
+[node name="Lure" type="OmniLight3D" parent="."]
+position = Vector3(0, 1.15, -2.82)
+light_color = Color(0.42, 0.78, 0.7, 1)
+light_energy = 1.4
+omni_range = 9.0
+shadow_enabled = false
