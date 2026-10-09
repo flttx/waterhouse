@@ -14,6 +14,8 @@ if ($code -ne 0 -or @($lines | Where-Object { "$_" -match '(SCRIPT ERROR|^ERROR:
 Write-Host 'Exported build\TheWaterhouse.exe + TheWaterhouse.pck'
 & $Godot --headless --path $projectPath --script (Join-Path $PSScriptRoot 'ship_metadata.gd')
 if ($LASTEXITCODE -ne 0) { exit 1 }
-$packageFiles = @('TheWaterhouse.exe', 'TheWaterhouse.pck', 'PLAY.txt', 'GODOT_LICENSES.txt') | ForEach-Object { Join-Path $projectPath "build\$_" }
+$packageFiles = @('TheWaterhouse.exe', 'TheWaterhouse.pck', 'PLAY.txt', 'GODOT_LICENSES.txt', 'AUDIO_CREDITS.txt') | ForEach-Object { Join-Path $projectPath "build\$_" }
+& $Godot --headless --audio-driver WASAPI --path (Join-Path $projectPath 'build') --main-pack (Join-Path $projectPath 'build\TheWaterhouse.pck') --script (Join-Path $projectPath 'tests\package_audio_test.gd')
+if ($LASTEXITCODE -ne 0) { exit 1 }
 Compress-Archive -LiteralPath $packageFiles -DestinationPath (Join-Path $projectPath 'build\TheWaterhouse-Windows-x64.zip') -CompressionLevel Optimal -Force
 Write-Host 'Packaged build\TheWaterhouse-Windows-x64.zip'

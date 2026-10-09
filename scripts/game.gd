@@ -42,7 +42,9 @@ var exit_started: bool = false
 var gate_tween: Tween
 var mechanical_clock: float = 0.0
 var pump_noise_clock: float = 0.0
-var settings := {"brightness": 1.12, "volume": 0.75, "sensitivity": 0.0022, "bob": 1.0, "grain": 1.0, "difficulty": "survival"}
+var settings := {"brightness": 1.12, "volume": 0.75, "sfx_volume": 1.0, "ambient_volume": 0.8, "music_volume": 0.6, "sensitivity": 0.0022, "bob": 1.0, "grain": 1.0, "difficulty": "survival"}
+var operating_device: WaterhouseDevice
+var fatal_hit_cue: String = ""
 var enemies: Array[CharacterBody3D] = []
 var enemy_threats: Dictionary[int, float] = {}
 var selected_difficulty: String = "survival"
@@ -89,10 +91,13 @@ func _ready() -> void:
 	add_child(hud)
 	soundscape = WaterhouseSoundscape.new()
 	add_child(soundscape)
+	soundscape.configure(world, player)
 	player.died.connect(_on_death)
 	player.noise_emitted.connect(_on_player_noise)
+	player.audio_event.connect(soundscape.player_event)
+	player.damaged.connect(_on_player_damaged)
 	for enemy: CharacterBody3D in enemies:
-		enemy.connect("omen", _on_omen)
+		enemy.connect("omen", _on_omen.bind(enemy))
 		enemy.connect("threat_changed", _track_enemy_threat.bind(enemy.get_instance_id()))
 		enemy.connect("attack_started", _on_enemy_attack.bind(enemy))
 	hud.start_requested.connect(start_run)
@@ -100,6 +105,7 @@ func _ready() -> void:
 	hud.resume_requested.connect(resume_run)
 	hud.quit_requested.connect(func() -> void: get_tree().quit())
 	hud.setting_changed.connect(_on_setting)
+	hud.audio_requested.connect(soundscape.player_event)
 	hud.difficulty_changed.connect(_on_difficulty_changed)
 	hud.map_requested.connect(open_map)
 	hud.map_close_requested.connect(close_map)
@@ -108,6 +114,7 @@ func _ready() -> void:
 		base_fog_color = world.environment.fog_light_color
 		base_ambient_energy = world.environment.ambient_light_energy
 	_load_settings()
+	soundscape.set_flow("title")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if "--play" in OS.get_cmdline_user_args():
 		start_run()
@@ -223,6 +230,8 @@ func start_run() -> void:
 	pump_noise_clock = 0.0
 	was_in_water = false
 	focused_device = null
+	operating_device = null
+	fatal_hit_cue = ""
 	navigation_clock = 0.0
 	navigation_result = {"points": [], "action": "", "status": "route"}
 	enemy_threats.clear()
@@ -242,8 +251,7 @@ func start_run() -> void:
 		enemy.call("reset_creature")
 		enemy.set("enabled", true)
 		enemy.set("pressure", 0.0)
-	soundscape.reset_sound()
-	soundscape.enabled = true
+	soundscape.start_run()
 	hud.effect.set_shader_parameter("injury", 0.0)
 	hud.effect.set_shader_parameter("underwater", 0.0)
 	hud.show_page("game")
@@ -255,6 +263,7 @@ func pause_run() -> void:
 	if flow != Flow.PLAYING:
 		return
 	flow = Flow.PAUSED
+	soundscape.set_flow("paused")
 	get_tree().paused = true
 	hud.show_page("pause")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -265,6 +274,7 @@ func resume_run() -> void:
 		return
 	get_tree().paused = false
 	flow = Flow.PLAYING
+	soundscape.set_flow("playing")
 	hud.show_page("game")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -302,13 +312,12 @@ func _process(delta: float) -> void:
 			stage = 7
 			_refresh_devices()
 			hud.notify("排水压力已建立。北侧闸门现在可以手动打开。", 9.0)
-			soundscape.one_shot("relay", -10.0)
-	if player.in_water and not was_in_water:
-		soundscape.one_shot("splash", -14.0, player.global_position)
+			soundscape.one_shot("pressure_ready", -10.0)
+			soundscape.music.duck()
 	was_in_water = player.in_water
 	hud.update_status(player, objective_text(), decoys, threat, delta, elapsed)
 	_update_guidance()
-	soundscape.update(delta, player, threat)
+	soundscape.update(delta, player, threat, world.region_id_at(player.global_position), stage, 1.0 - purge_remaining / PURGE_SECONDS)
 	_update_environment(delta)
 
 
@@ -326,14 +335,19 @@ func _physics_process(delta: float) -> void:
 			_on_win()
 		return
 	focused_device = _find_device()
+	if is_instance_valid(operating_device) and (focused_device != operating_device or not Input.is_action_pressed("interact") or operating_device.completed):
+		_end_operation()
 	if focused_device != null:
 		if focused_device.completed:
 			hud.show_interaction("已完成 · " + focused_device.description)
 		elif not focused_device.available:
 			hud.show_interaction(_locked_message(focused_device))
+			if Input.is_action_just_pressed("interact"):
+				soundscape.player_event("ui_locked")
 		else:
 			hud.show_interaction("按住 E · " + focused_device.description, focused_device.progress)
 			if Input.is_action_pressed("interact"):
+				operating_device = focused_device
 				focused_device.operate(delta)
 				mechanical_clock -= delta
 				if mechanical_clock <= 0.0:
@@ -344,8 +358,15 @@ func _physics_process(delta: float) -> void:
 		var climb_prompt := player.get_climb_prompt()
 		hud.show_interaction(climb_prompt)
 		if not climb_prompt.is_empty() and Input.is_action_just_pressed("interact"):
-			if player.climb_nearest():
-				soundscape.one_shot("step", -16.0)
+			player.climb_nearest()
+
+
+func _end_operation() -> void:
+	if is_instance_valid(operating_device) and operating_device.is_valve:
+		soundscape.stop_cue("valve")
+		if not operating_device.completed:
+			soundscape.one_shot("valve_stop", -19.0, operating_device.global_position)
+	operating_device = null
 
 
 func _find_device() -> WaterhouseDevice:
@@ -420,14 +441,19 @@ func _on_device_activated(device: WaterhouseDevice) -> void:
 			exit_started = true
 			player.enabled = false
 			_set_enemies_enabled(false)
+			enemy_threats.clear()
+			threat = 0.0
 			soundscape.one_shot("gate", -9.0, gate.global_position)
+			soundscape.music.cue_event("egress")
 			gate.collision_layer = 0
 			gate_tween = create_tween()
 			gate_tween.tween_property(gate, "position:y", 7.6, 3.0).set_trans(Tween.TRANS_SINE)
 			gate_tween.tween_callback(_on_gate_opened)
 	_refresh_devices()
 	navigation_clock = 0.0
-	soundscape.one_shot("relay", -14.0, device.global_position)
+	soundscape.stop_cue("valve" if device.is_valve else "relay")
+	soundscape.one_shot("valve_done" if device.is_valve else "relay", -14.0, device.global_position)
+	soundscape.music.duck()
 
 
 func objective_text() -> String:
@@ -452,10 +478,13 @@ func _on_player_noise(pos: Vector3, loudness: float) -> void:
 		_broadcast_noise(pos, loudness)
 
 
-func _on_omen(pos: Vector3, strength: float) -> void:
+func _on_omen(pos: Vector3, strength: float, enemy: Node3D = null) -> void:
 	if flow != Flow.PLAYING:
 		return
-	soundscape.omen(pos, strength)
+	if is_instance_valid(enemy):
+		soundscape.creature_event(enemy, "omen", strength)
+	else:
+		soundscape.omen(pos, strength)
 	if world.water_material != null:
 		world.water_material.set_shader_parameter("ripple_origin", pos)
 		world.water_material.set_shader_parameter("ripple_strength", strength)
@@ -495,7 +524,9 @@ func _on_death(reason: String) -> void:
 	player.enabled = false
 	_set_enemies_enabled(false)
 	soundscape.enabled = false
-	soundscape.reset_sound()
+	operating_device = null
+	soundscape.set_flow("dead")
+	soundscape.terminal_impact(fatal_hit_cue)
 	hud.result_reason = reason
 	hud.show_page("dead")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -508,7 +539,8 @@ func _on_win() -> void:
 	player.enabled = false
 	_set_enemies_enabled(false)
 	soundscape.enabled = false
-	soundscape.reset_sound()
+	operating_device = null
+	soundscape.set_flow("won")
 	hud.result_time = elapsed
 	hud.show_page("won")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -518,6 +550,8 @@ func _on_gate_opened() -> void:
 	if flow != Flow.PLAYING or not exit_started:
 		return
 	player.enabled = true
+	soundscape.stop_cue("gate")
+	soundscape.one_shot("gate_stop", -14.0, gate.global_position)
 	hud.show_interaction("")
 	hud.notify("闸门已打开。穿过通道，回到空气中。", 7.0)
 
@@ -526,7 +560,7 @@ func _on_setting(key: String, value: float) -> void:
 	settings[key] = value
 	match key:
 		"brightness": hud.effect.set_shader_parameter("brightness", value)
-		"volume": soundscape.set_volume(value)
+		"volume", "sfx_volume", "ambient_volume", "music_volume": soundscape.set_mix(key, value)
 		"sensitivity": player.mouse_sensitivity = value
 		"bob": player.head_bob_enabled = value > 0.5
 		"grain": hud.effect.set_shader_parameter("grain_enabled", value)
@@ -553,12 +587,18 @@ func _load_settings() -> void:
 				settings[key] = WaterhouseDifficulty.normalize_key(value)
 	hud.brightness = clampf(settings["brightness"], 1.0, 1.5)
 	hud.volume = clampf(settings["volume"], 0.0, 1.0)
+	hud.sfx_volume = clampf(settings["sfx_volume"], 0.0, 1.0)
+	hud.ambient_volume = clampf(settings["ambient_volume"], 0.0, 1.0)
+	hud.music_volume = clampf(settings["music_volume"], 0.0, 1.0)
 	hud.sensitivity = clampf(settings["sensitivity"], 0.0008, 0.005)
 	hud.bob = settings["bob"] > 0.5
 	hud.reduced_grain = settings["grain"] < 0.5
 	player.mouse_sensitivity = hud.sensitivity
 	player.head_bob_enabled = hud.bob
 	soundscape.set_volume(hud.volume)
+	soundscape.set_mix("sfx_volume", hud.sfx_volume)
+	soundscape.set_mix("ambient_volume", hud.ambient_volume)
+	soundscape.set_mix("music_volume", hud.music_volume)
 	hud.effect.set_shader_parameter("brightness", hud.brightness)
 	hud.effect.set_shader_parameter("grain_enabled", 0.0 if hud.reduced_grain else 1.0)
 	selected_difficulty = WaterhouseDifficulty.normalize_key(str(settings["difficulty"]))
@@ -629,7 +669,14 @@ func _track_enemy_threat(value: float, instance_id: int) -> void:
 
 func _on_enemy_attack(enemy: CharacterBody3D) -> void:
 	if flow == Flow.PLAYING:
-		soundscape.one_shot("metal" if enemy.get_meta("species") == "crab" else "splash", -8.0, enemy.global_position)
+		soundscape.creature_event(enemy, "windup")
+
+
+func _on_player_damaged(_amount: float, source: Node3D) -> void:
+	if flow == Flow.PLAYING and is_instance_valid(source):
+		if player.health <= 0.0:
+			fatal_hit_cue = str(source.get_meta("species", "leviathan")) + "_hit"
+		soundscape.creature_event(source, "hit")
 
 
 func current_goal() -> WaterhouseDevice:
@@ -704,6 +751,7 @@ func open_map() -> void:
 		return
 	map_return_flow = flow
 	flow = Flow.MAP
+	soundscape.set_flow("map")
 	get_tree().paused = true
 	hud.show_map(world.map_regions, world.water_regions, get_map_markers(), player.global_position, player.rotation.y, _monster_markers(), _route_points(), player.camera.global_position.y - player.global_position.y)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -713,6 +761,7 @@ func close_map() -> void:
 	if flow != Flow.MAP:
 		return
 	flow = map_return_flow
+	soundscape.set_flow("paused" if flow == Flow.PAUSED else "playing")
 	get_tree().paused = flow == Flow.PAUSED
 	hud.show_page("pause" if flow == Flow.PAUSED else "game")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if flow == Flow.PAUSED else Input.MOUSE_MODE_CAPTURED

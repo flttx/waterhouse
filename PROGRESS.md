@@ -1,5 +1,29 @@
 # 开发进度
 
+## 2026-10-09 · 音效与动态 BGM（代码与自动验收完成）
+- 用户确认混合制作（原创合成与免费授权录音）及克制的动态氛围配乐，并要求执行计划。
+- 初始源码工作区干净；已有 13 个合成 WAV、单总音量、统一生物预兆和单环境底声。计划补齐分组混音、动作/设备、六组区域、八类生物与同步分层配乐。
+- 素材、声音运行、音乐调度并行分工；主线接入实际角色/设备/生物事件、设置和验证。保持 AI 噪声与听觉混音独立。
+- 声音系统、素材与 Windows 0.3 包已完成自动验收；真人耳机/扬声器整局试听不以自动回归冒充。
+- 已实现四项音量与真实静音、28 世界 + 4 UI 声部、六组区域 2 秒过渡、介质 0.5 秒过渡，最近 8 个声源 5 Hz 实体射线遮挡（含泵），遮挡低通/衰减 0.3 秒平滑。世界音频与 AI 噪声事件独立。
+- 角色 jump/land/splash/dive/surface/climb/hurt、设备中止/完成/压力/闸门、实际生物前摇与命中分别接入。伤害增加可选来源参数，保留原数值与条件；原测试替身同步接受来源参数，既有行为断言未删除。
+- 素材 66 cues、83 音效 + 10 BGM、最终 15,465,573 字节；44 成品使用原站核实并下载的 Kenney CC0 / Michel Baradari CC BY 3.0 录音。111 条 SHA-256/出处/加工记录，来源见 `assets/audio/AUDIO_SOURCES.md`；原始录音 `.gdignore` 排除导入，Windows 包新增 AUDIO_CREDITS。
+- 资产检查已通过：全部 48 kHz、声道/时长/循环接缝与能量、引用/归属、4 倍重建峰值；最高成品峰值 −5.14557 dBTP、最大循环跳变 0.0049644，报告 `artifacts/audio-assets-report.json`。
+- `music_test.gd` 原生 WASAPI 44 项通过：同钟三层 96 秒、迟滞/留白、排水分层、流程 once、暂停真实播放位置、压低及重开；退出无错误。`audio_test.gd` 首轮 73 项通过，含真实墙遮挡/移除、实例跟随与独立预兆、前摇不伪造命中、池上限/低氧优先、旧配置新增默认、十次重开与终局声音。
+- 实际 RTX3050 / WASAPI `audio_capture.gd` 两种窗口设置页六滑条、可见范围与首个控件焦点通过；已查看 1280×800 截图。真实 mixer 39.35 秒 / 48 kHz 立体声捕获，4 倍真峰值 −7.11 dBTP，FFmpeg EBU 测得 −27.5 LUFS / 13.3 LU 动态范围。捕获是脚本声音场景预览，不充当真人整局试听。原 game_flow 更新 Ogg 循环行为检查后仍 40 项通过。
+
+### 第三阶段最终验证与交付
+- 源码提交前规范化 Kenney 许可副本的异常换行与行尾空白，并同步生成器；许可文字未改变、原始 ZIP 未修改，111 条来源 SHA-256 与许可引用复核通过。提交前源码 lint、暂存区 whitespace、文件大小与生成物排除检查通过。
+- 集成复审修复：诱饵碰撞归入 SFX，不再被环境音量误关；闸门阶段清除停用敌人的威胁，让撤离音乐及时出现；致死命中保留短身体冲击声，清理旧世界声音不再吞掉它；角色冻结期间停止伪脚步。排水音乐改为真实无掉音循环并纳入接缝/能量检查。设置回归升级为六滑条逐项验证，map_ui 62 项通过。
+- 长程验证曾两次原生崩溃：Windows minidump 为 WASAPI 混音线程 read 0x40、0xc0000005 / 偏移 0x31d6c57。纯音频最小复现发生相同崩溃，相同代码加锁后 3000 万写入通过。官方 4.7.2 源码 set_bus_send 无锁修改 StringName，混音线程并发查发送目标，空指针窗口与 dump 一致：[AudioServer](https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/servers/audio/audio_server.cpp)、[StringName](https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/core/string/string_name.cpp)。生产路由加 lock/unlock 并跳过同目标重复赋值，新增项目 AGENTS Never 约束和路由压力回归，不关音频、不忽略失败。
+- 修复后完整通关两次通过：54 项 / 十设备 / 9 次真实 E 上岸 / fallback0 / 1990.30m / health100 / 最低氧62.40%；单跑 922.30 模拟秒、111.39 wall 秒，最终完整检查 922.03 模拟秒、111.36 wall 秒。敌人仍仅在静态通行回归中禁用。
+- 最终 tools/export_windows.ps1 exit0：17 运行脚本解析、19 回归入口、300 帧运行、93 素材 / 66 cues / 10 配乐 / 111 来源、源码 lint 与 Git whitespace 全部通过，见 artifacts/audio-delivery.log。音乐专项最终 46 项；声音专项补测最终 80 项（audio-test-final.log）；生产 _send 活跃 WASAPI mixer 300 万次切换通过（audio-routing-test.log）。
+- 最终实机两窗口设置均已查看：39.51 秒 / 48 kHz 立体声 WAV，4 倍真峰值 −8.00 dBTP、RMS0.04046，另提供 MP3 试听。证据 audio-capture-final.log、audio-mix-report.json。脚本场景预览不代表完整真人试听。
+- Windows 0.3 实际文件版本 0.3.0.0：EXE109158400 字节、PCK66549432 字节、ZIP103447781 字节。从 build 目录独立 EXE / RTX3050 / WASAPI 游戏运行 300 帧 exit0，无引擎错误。隔离 PCK 审计解码全部 93 声音资源，原录音目录未被打包；ZIP 五文件 CRC、CC BY 作者/许可链接、0.3 操作说明通过。证据 release-audio-gpu.log、package-audio-test.log。发布 EXE 拒绝 --path 覆盖是模板限制；PCK 审计使用本机 Godot 的 --main-pack，源码调试仍用编辑器 F5。
+
+### 第三阶段后续
+耳机与普通扬声器完整试玩探索/求生，确认八种生物听辨、预警方向、音乐掩蔽和循环疲劳，再按记录调整混音。合成呼吸与原创配乐的美术质感仍需人工试听及精修。
+
 ## 2026-10-08 · 首次源码提交准备
 - 已确认本地 Git 与 `origin`（`https://github.com/flttx/waterhouse.git`）可用，远程尚无分支；沿用当前 `master` 分支进行首次提交。
 - 纳入源码、场景、运行素材、Godot `.uid` / `.import` 设置、测试与工具；`.gitignore` 排除 `.godot/`、`build/`、`artifacts/` 和日志等生成文件。

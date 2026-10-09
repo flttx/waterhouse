@@ -8,7 +8,7 @@ class TestPlayer extends CharacterBody3D:
 	var dead: bool = false
 	var camera: Camera3D
 
-	func take_damage(amount: float, _reason: String) -> void:
+	func take_damage(amount: float, _reason: String, _source: Node3D = null) -> void:
 		health -= amount
 		dead = health <= 0.0
 

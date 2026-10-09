@@ -4,6 +4,8 @@ extends CharacterBody3D
 
 signal died(reason: String)
 signal noise_emitted(pos: Vector3, loudness: float)
+signal audio_event(cue: String)
+signal damaged(amount: float, source: Node3D)
 
 const STANDING_HEIGHT: float = 1.8
 const CROUCH_HEIGHT: float = 1.12
@@ -105,6 +107,7 @@ func _physics_process(delta: float) -> void:
 	if not was_grounded and is_on_floor() and not in_water:
 		_landing_offset = -clampf(absf(_last_vertical_speed) * 0.015, 0.0, 0.2)
 		if _last_vertical_speed < -4.0:
+			audio_event.emit("land")
 			noise_emitted.emit(global_position, clampf(absf(_last_vertical_speed) / 13.0, 0.3, 0.85))
 	_update_breath(delta)
 	_update_noise(delta, moving, sprinting)
@@ -121,6 +124,7 @@ func _walk(delta: float, movement: Vector2, sprinting: bool) -> void:
 		velocity.y -= GRAVITY * delta
 	elif Input.is_action_just_pressed("jump") and not crouching:
 		velocity.y = 5.1
+		audio_event.emit("jump")
 		noise_emitted.emit(global_position, 0.3)
 	else:
 		velocity.y = -0.3
@@ -155,7 +159,13 @@ func _update_medium(emit_splash: bool = true) -> void:
 	submerged = bool(world.call("is_water", camera.global_position)) and camera.global_position.y < WATER_LEVEL - 0.08
 	if in_water != previous_water or submerged != previous_submerged:
 		_update_flashlight()
+	if emit_splash and enabled:
+		if submerged and not previous_submerged:
+			audio_event.emit("dive")
+		elif previous_submerged and not submerged:
+			audio_event.emit("surface")
 	if emit_splash and enabled and in_water and not previous_water and not _climbing:
+		audio_event.emit("splash")
 		noise_emitted.emit(global_position, clampf(absf(_last_vertical_speed) / 9.0, 0.45, 1.0))
 
 
@@ -251,6 +261,7 @@ func climb_nearest() -> bool:
 	_climb_target = target
 	_climb_elapsed = 0.0
 	_climbing = true
+	audio_event.emit("climb_start")
 	velocity = Vector3.ZERO
 	noise_level = 0.45
 	noise_emitted.emit(global_position, noise_level)
@@ -267,6 +278,7 @@ func _update_climb(delta: float) -> void:
 	var collision: KinematicCollision3D = move_and_collide(position_goal - global_position)
 	if collision != null or _climb_elapsed >= 0.7:
 		_climbing = false
+		audio_event.emit("climb_end")
 		velocity = Vector3.ZERO
 		noise_level = 0.0
 
@@ -325,10 +337,14 @@ func apply_settings(values: Dictionary) -> void:
 		base_fov = clampf(float(values["fov"]), 60.0, 100.0)
 
 
-func take_damage(amount: float, reason: String) -> void:
+func take_damage(amount: float, reason: String, source: Node3D = null) -> void:
 	if not enabled or _dead:
 		return
-	health = maxf(0.0, health - maxf(amount, 0.0))
+	var applied := minf(health, maxf(amount, 0.0))
+	health -= applied
+	if applied > 0.0:
+		audio_event.emit("hurt")
+		damaged.emit(applied, source)
 	if health <= 0.0:
 		_dead = true
 		enabled = false

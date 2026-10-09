@@ -74,7 +74,9 @@ func _run() -> void:
 	hud.set_difficulty("exploration")
 	expect(difficulty_events.size() == 3, "loading difficulty does not emit user change signal")
 	hud.show_page("settings")
-	expect(hud.menu.find_children("*", "HSlider", true, false).size() == 3, "settings retain brightness volume and sensitivity")
+	expect(hud.menu.find_children("*", "HSlider", true, false).size() == 6, "settings retain original controls and add three audio groups")
+	for key: String in ["brightness", "volume", "sensitivity", "sfx_volume", "ambient_volume", "music_volume"]:
+		expect(hud.menu.find_child(key + "_slider", true, false) is HSlider, "settings expose native slider " + key)
 	expect(hud.difficulty_buttons.is_empty(), "settings do not expose difficulty changes")
 	hud.set_difficulty("abyss")
 	expect(hud.current_page == "settings", "difficulty loading does not cover settings")

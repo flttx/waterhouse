@@ -127,6 +127,14 @@ func region_at(pos: Vector3) -> String:
 	return "设施边界"
 
 
+func region_id_at(pos: Vector3) -> String:
+	for region: Dictionary in map_regions:
+		var bounds: Rect2 = region["bounds"]
+		if bounds.has_point(Vector2(pos.x, pos.z)):
+			return str(region["id"])
+	return "main_hall"
+
+
 func is_underwater(pos: Vector3) -> bool:
 	return is_water(pos) and pos.y < WATER_Y - 0.18
 
@@ -1188,6 +1196,18 @@ func _pipe(node_name: String, a: Vector3, b: Vector3, radius: float, material: M
 func _collision(parent_node: Node3D, shape: Shape3D) -> void:
 	var body := StaticBody3D.new()
 	body.name = "Solid"
+	var surface := "concrete"
+	if parent_node is MeshInstance3D:
+		var material := (parent_node as MeshInstance3D).material_override
+		if material == _metal or material == _rust:
+			surface = "metal"
+		elif material == _tile or material == _pool_tile:
+			surface = "dry_tile"
+			for water_bounds: Rect2 in water_regions:
+				if water_bounds.grow(2.0).has_point(Vector2(parent_node.position.x, parent_node.position.z)):
+					surface = "wet_tile"
+					break
+	body.set_meta("audio_surface", surface)
 	body.collision_layer = 1
 	body.collision_mask = 0
 	var collision := CollisionShape3D.new()

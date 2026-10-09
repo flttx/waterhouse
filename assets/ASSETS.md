@@ -27,4 +27,12 @@
 - 图标：项目原创 SVG。
 - 中文字体：通过 Godot SystemFont 使用目标系统的微软雅黑/Noto CJK；不复制或分发系统字体文件。
 
-本轮没有新增外部模型或音频来源。五个原 GLB 的商业使用权仍需素材账户所有者确认。
+第一、二阶段没有新增外部模型或音频来源。五个原 GLB 的商业使用权仍需素材账户所有者确认。
+
+## 第三阶段声音素材（2026-10-09）
+
+新增 83 份音效与 10 份配乐，48 kHz。44 份成品包含真实免费授权录音：Kenney Impact Sounds（CC0 1.0）及 Michel Baradari Water splashes（CC BY 3.0）。其余为确定性原创合成，包括八类生物、呼吸与全部 BGM；没有购买素材、调用音乐生成 API 或录制真人呼吸。
+
+完整作者归属、原始下载、许可证与加工方式见 [声音来源](audio/AUDIO_SOURCES.md)。`audio/audio_v2_manifest.json` 记录 111 个成品/原始素材的 SHA-256 与来源关系；`audio/v2/source/` 保留下载档案、实际使用原录音和许可证，并用 `.gdignore` 排除运行导入。Windows 包附 `AUDIO_CREDITS.txt`，包含 CC BY 归属及许可链接。
+
+新增离线生成器 `tools/generate_audio_v2.py` 不会覆盖旧 13 个 WAV。动态音乐及混音由原生 Godot 播放与处理，运行时不依赖 FFmpeg、Python 或联网。

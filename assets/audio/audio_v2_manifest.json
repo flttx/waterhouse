@@ -1,0 +1,1942 @@
+{
+  "version": 2,
+  "sample_rate": 48000,
+  "cues": {
+    "step_dry_tile": {
+      "files": [
+        "res://assets/audio/v2/step_dry_tile_0.wav",
+        "res://assets/audio/v2/step_dry_tile_1.wav",
+        "res://assets/audio/v2/step_dry_tile_2.wav",
+        "res://assets/audio/v2/step_dry_tile_3.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "step_wet_tile": {
+      "files": [
+        "res://assets/audio/v2/step_wet_tile_0.wav",
+        "res://assets/audio/v2/step_wet_tile_1.wav",
+        "res://assets/audio/v2/step_wet_tile_2.wav",
+        "res://assets/audio/v2/step_wet_tile_3.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "step_metal": {
+      "files": [
+        "res://assets/audio/v2/step_metal_0.wav",
+        "res://assets/audio/v2/step_metal_1.wav",
+        "res://assets/audio/v2/step_metal_2.wav",
+        "res://assets/audio/v2/step_metal_3.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "step_concrete": {
+      "files": [
+        "res://assets/audio/v2/step_concrete_0.wav",
+        "res://assets/audio/v2/step_concrete_1.wav",
+        "res://assets/audio/v2/step_concrete_2.wav",
+        "res://assets/audio/v2/step_concrete_3.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "swim": {
+      "files": [
+        "res://assets/audio/v2/swim_0.wav",
+        "res://assets/audio/v2/swim_1.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "swim_fast": {
+      "files": [
+        "res://assets/audio/v2/swim_fast_0.wav",
+        "res://assets/audio/v2/swim_fast_1.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "splash": {
+      "files": [
+        "res://assets/audio/v2/splash_0.wav",
+        "res://assets/audio/v2/splash_1.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "dive": {
+      "files": [
+        "res://assets/audio/v2/dive_0.wav",
+        "res://assets/audio/v2/dive_1.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "surface": {
+      "files": [
+        "res://assets/audio/v2/surface_0.wav",
+        "res://assets/audio/v2/surface_1.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "drip": {
+      "files": [
+        "res://assets/audio/v2/drip_0.wav",
+        "res://assets/audio/v2/drip_1.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "climb_start": {
+      "files": [
+        "res://assets/audio/v2/climb_start.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "climb_end": {
+      "files": [
+        "res://assets/audio/v2/climb_end.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "land": {
+      "files": [
+        "res://assets/audio/v2/land.wav"
+      ],
+      "loop": false,
+      "category": "player"
+    },
+    "jump": {
+      "files": [
+        "res://assets/audio/v2/jump.wav"
+      ],
+      "loop": false,
+      "category": "player"
+    },
+    "valve": {
+      "files": [
+        "res://assets/audio/v2/valve.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "valve_stop": {
+      "files": [
+        "res://assets/audio/v2/valve_stop.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "valve_done": {
+      "files": [
+        "res://assets/audio/v2/valve_done.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "gate_stop": {
+      "files": [
+        "res://assets/audio/v2/gate_stop.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "stress": {
+      "files": [
+        "res://assets/audio/v2/stress.ogg"
+      ],
+      "loop": false,
+      "category": "environment"
+    },
+    "pipe": {
+      "files": [
+        "res://assets/audio/v2/pipe.ogg"
+      ],
+      "loop": false,
+      "category": "environment"
+    },
+    "gasp": {
+      "files": [
+        "res://assets/audio/v2/gasp.wav"
+      ],
+      "loop": false,
+      "category": "player"
+    },
+    "breath_low": {
+      "files": [
+        "res://assets/audio/v2/breath_low.wav"
+      ],
+      "loop": false,
+      "category": "player"
+    },
+    "breath_run": {
+      "files": [
+        "res://assets/audio/v2/breath_run.wav"
+      ],
+      "loop": false,
+      "category": "player"
+    },
+    "hurt": {
+      "files": [
+        "res://assets/audio/v2/hurt.wav"
+      ],
+      "loop": false,
+      "category": "player"
+    },
+    "relay": {
+      "files": [
+        "res://assets/audio/v2/relay.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "pump_start": {
+      "files": [
+        "res://assets/audio/v2/pump_start.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "pump": {
+      "files": [
+        "res://assets/audio/v2/pump.wav"
+      ],
+      "loop": true,
+      "category": "world"
+    },
+    "gate": {
+      "files": [
+        "res://assets/audio/v2/gate.wav"
+      ],
+      "loop": true,
+      "category": "world"
+    },
+    "vent": {
+      "files": [
+        "res://assets/audio/v2/vent.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "submerged": {
+      "files": [
+        "res://assets/audio/v2/submerged.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "heartbeat": {
+      "files": [
+        "res://assets/audio/v2/heartbeat.wav"
+      ],
+      "loop": true,
+      "category": "player"
+    },
+    "ui_move": {
+      "files": [
+        "res://assets/audio/v2/ui_move.wav"
+      ],
+      "loop": false,
+      "category": "ui"
+    },
+    "ui_confirm": {
+      "files": [
+        "res://assets/audio/v2/ui_confirm.wav"
+      ],
+      "loop": false,
+      "category": "ui"
+    },
+    "ui_locked": {
+      "files": [
+        "res://assets/audio/v2/ui_locked.wav"
+      ],
+      "loop": false,
+      "category": "ui"
+    },
+    "pressure_ready": {
+      "files": [
+        "res://assets/audio/v2/pressure_ready.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "ambient_hall": {
+      "files": [
+        "res://assets/audio/v2/ambient_hall.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "ambient_corridor": {
+      "files": [
+        "res://assets/audio/v2/ambient_corridor.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "ambient_mechanical": {
+      "files": [
+        "res://assets/audio/v2/ambient_mechanical.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "ambient_archive": {
+      "files": [
+        "res://assets/audio/v2/ambient_archive.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "ambient_reservoir": {
+      "files": [
+        "res://assets/audio/v2/ambient_reservoir.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "ambient_egress": {
+      "files": [
+        "res://assets/audio/v2/ambient_egress.ogg"
+      ],
+      "loop": true,
+      "category": "environment"
+    },
+    "leviathan_omen": {
+      "files": [
+        "res://assets/audio/v2/leviathan_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "leviathan_windup": {
+      "files": [
+        "res://assets/audio/v2/leviathan_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "leviathan_hit": {
+      "files": [
+        "res://assets/audio/v2/leviathan_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "angler_omen": {
+      "files": [
+        "res://assets/audio/v2/angler_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "angler_windup": {
+      "files": [
+        "res://assets/audio/v2/angler_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "angler_hit": {
+      "files": [
+        "res://assets/audio/v2/angler_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "crab_omen": {
+      "files": [
+        "res://assets/audio/v2/crab_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "crab_windup": {
+      "files": [
+        "res://assets/audio/v2/crab_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "crab_hit": {
+      "files": [
+        "res://assets/audio/v2/crab_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "whale_omen": {
+      "files": [
+        "res://assets/audio/v2/whale_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "whale_windup": {
+      "files": [
+        "res://assets/audio/v2/whale_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "whale_hit": {
+      "files": [
+        "res://assets/audio/v2/whale_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "colossus_omen": {
+      "files": [
+        "res://assets/audio/v2/colossus_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "colossus_windup": {
+      "files": [
+        "res://assets/audio/v2/colossus_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "colossus_hit": {
+      "files": [
+        "res://assets/audio/v2/colossus_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "hunter_omen": {
+      "files": [
+        "res://assets/audio/v2/hunter_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "hunter_windup": {
+      "files": [
+        "res://assets/audio/v2/hunter_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "hunter_hit": {
+      "files": [
+        "res://assets/audio/v2/hunter_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "lurker_omen": {
+      "files": [
+        "res://assets/audio/v2/lurker_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "lurker_windup": {
+      "files": [
+        "res://assets/audio/v2/lurker_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "lurker_hit": {
+      "files": [
+        "res://assets/audio/v2/lurker_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "drifter_omen": {
+      "files": [
+        "res://assets/audio/v2/drifter_omen.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "drifter_windup": {
+      "files": [
+        "res://assets/audio/v2/drifter_windup.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "drifter_hit": {
+      "files": [
+        "res://assets/audio/v2/drifter_hit.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    },
+    "metal": {
+      "files": [
+        "res://assets/audio/v2/gate_stop.wav"
+      ],
+      "loop": false,
+      "category": "world"
+    }
+  },
+  "music": {
+    "base": "res://assets/audio/music/base.ogg",
+    "texture": "res://assets/audio/music/texture.ogg",
+    "pulse": "res://assets/audio/music/pulse.ogg",
+    "title": "res://assets/audio/music/title.ogg",
+    "first_dive": "res://assets/audio/music/first_dive.ogg",
+    "reservoir": "res://assets/audio/music/reservoir.ogg",
+    "pump": "res://assets/audio/music/pump.ogg",
+    "egress": "res://assets/audio/music/egress.ogg",
+    "dead": "res://assets/audio/music/dead.ogg",
+    "won": "res://assets/audio/music/won.ogg"
+  },
+  "sources": [
+    {
+      "file": "res://assets/audio/v2/source/footstep_concrete_000.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "d7267e183067757c92c169de2a379abea592cfca6b39bb2e8feea15221ad79fe",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/footstep_concrete_001.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "507a75eb19b897087855a3be3cf11a12d7fa37d143ad535eeebe0b8031c7325d",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/footstep_concrete_002.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "b21fa546d74941196b25da8a20b7010abd8c05c4fcf93545d1f344e66a664e13",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/footstep_concrete_003.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "8b513c2f0316324060b9174b8f28df6c2147418c506e6a53b77f18e149a5547b",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactMetal_light_000.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "33b5e6e37c6e9d54e07bf5a89b12c76e879f40c1ea83cdd82714df1d6f9fec6d",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactMetal_light_001.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "fba69c467ddd85da7b1d82e259f936b876d9ba6a3d6f1b24bdd10468e46bfe08",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactMetal_light_002.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "25a96f90a9a1f88a531e824e126f0519504625e5635e65a72e4f31611428db29",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactMetal_light_003.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "92d5db6bfc672d9dc1b4f390b2900504f013187fa36335472554fafefa9050b1",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactPlate_light_000.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "6e797cf8a5bfc52d7ed5eb47c227974c1cf2a674954fec5b539cea7d62c7282c",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactPlate_light_001.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "947915c2eb6ac57ee08fd3a48b297fd108d69abc72076e79882c21cad0eef56e",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactPlate_light_002.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "8ac5869ea434cf0d364872774efe70b2d666a4f02ba35ddfc1e051d336721be8",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactPlate_light_003.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "dbfb7c1d002576696df3e9a43d6639ee3f342068398b5e7b55bc2389d20508a9",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactMetal_medium_000.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "a96f879fec0864a8938e0c745b6996a6c5679c16a234ce31a01cc995e8401003",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/impactBell_heavy_000.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "94b8bb5f2d43ab65e4bcc32b28562416e9bc2c51d9fd4be1e333660ee52f977f",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/splash/splash1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "c7979c0a18aa2a686377587cb2f505cb647ddd05ced67d6d88044b52ea91ec87",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/splash/splash2.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "e712b36452584e9e62904f1c6bab2b346160e17b042b1cf27dbf7fa2ae999342",
+      "processing": "unmodified retained source recording",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_dry_tile_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "8a3a2b394c29f2b644b486245c10f98e4d047ae721554de9cdd394847b809f42",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_dry_tile_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "937de789a46be9714eab4a0f0ce3a8028b2009f05f39736a3dd63226a6914f4c",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_001.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_dry_tile_2.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "68252d00f63515798b774fa5a03f48635144e12c3122332d190971b9091795b9",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_002.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_dry_tile_3.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "94362bce4e3b273364d58d0ad5ad5a2a1f4383671dc8650835f76122ffca3935",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_003.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_wet_tile_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "3bf402ceea97107bb4ee40ee7eed70081aabee969a99407de348f7dba248a493",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_000.ogg",
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_wet_tile_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "f515b5c4d80b0c9aca4552ea77766d76e8afd4a5c57dfbe65f885707dd5deff4",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_001.ogg",
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_wet_tile_2.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "8345c0e4ba814675fc5fad19956407c9d01dc578f01404f3493a94eabf4e7f65",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_002.ogg",
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_wet_tile_3.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "e17bb13f1349fefd4f65b43885cd5fbcfb2a819bc0b23bb0c1b6fc0603302e6d",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_003.ogg",
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_metal_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "862beb45571982e9b0ddd28ecb013e5a4f9010433e64f05caa9706124c870185",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactPlate_light_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_metal_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "e370ecc87b11dea2e4696a6f76f6af2b12f1f69e58a88d4d3851ca1360cfdd61",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactPlate_light_001.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_metal_2.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "7b1b54b187434351179890286721a89c35788c0012dd3fd27065d9ee4f890730",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactPlate_light_002.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_metal_3.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "76be63732a4f6e59baabb9970bd684470eeace4c3e270be46e4f1e7beaba3572",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactPlate_light_003.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_concrete_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "5a499f3d54bcb72c9c9c5c63d0b34936601f4a8f2c5cbc12a6b7eb5c1c03751b",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_concrete_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "1800a40ced9c61d1e89947180a3178a1f7dfe9e1a19d8f137f412928485fe112",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_001.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_concrete_2.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "64c6cda57aa232a65b154a48da1db2ef7f79d95238537219ddb4faa44ea6b822",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_002.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/step_concrete_3.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "4c0d2a45fd42a3df069d704fdef7eebb34cd678b0a10dee0b262658b437c1d65",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_003.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/swim_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "0b2379855a46eb041ad8222d3cadee04cc9248ba43ee0c970a17eb5b222b6daf",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/swim_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "5b7795c01120fe3b1583ef0850a3d8fb42fd1c626236fe8cca8c062bd7b1b964",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/swim_fast_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "22417ff90f4e57351237d7cd1627d69a69e5291c630e83d4ec978aea592751a6",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/swim_fast_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "67c3c15d4c781ca87c03224ba7a1fca052eda7092b0b41613cc94894a58ce8f4",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/splash_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "c6d74d401dc0de550dfd182179604904557a42afca8d6cd530e7641ca419b9e6",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/splash_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "328618ad64ff8e3512c2aa541ba71fb1b8f15f704ff6fe3ed8159247055ae3d6",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/dive_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "22e05147142c003edd414cff3c1c0dc9dfa8eaed52365cb4bb2f65abeaf7e99c",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/dive_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "137534d708b8f111320575729b69a99e6e24c1b960e9ca3a32d98431fa834a33",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/surface_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "a8b3209124e002e67af3a42ab1cb4de2e63f82c19c9c1181a9dd88344990a3e6",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/surface_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "8a9097f8df79ef15275b5c2d7c02d8d4b5f324e335fba0d2b0697b0b3a3bdb4b",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/drip_0.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "5d901042eba806d7380c2e88fb57063097299a9c54ca5347f0fc8562bc4a0975",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/drip_1.wav",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "2ea629713ca087461009b7bf0590d9b506343dcde2cf23e16259da584e482812",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash2.wav"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/climb_start.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "f555e52e206538dd699c87e4c7ea1b8e9e117e6871184eafe0eeaa47366efcb2",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactMetal_light_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/climb_end.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "e8012eb7c39546ae261f8b6e40f5c7b9daa84c1b526c13a898682531ae7688e2",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactMetal_light_001.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/land.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "014a724480f3ba55acb53c27e8b667267feb8299bed559551bb9b4596921e3e0",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_003.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/jump.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "2b77dbe7f14b1b0d4b2bab06ceb3a4d0d1e8554d31be33c4bdabca7d42097acc",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/footstep_concrete_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/valve.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "a6bc6f6b03ac85eb525495ff6fcb3d7d1d175635c308e7a748364e91115983f7",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/valve_stop.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "04c724ce1d72ee76224bce155a659a1f422482a62df5529011bd834205958bbf",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactMetal_light_002.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/valve_done.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "7ec363ca41f1606c77924cae609cb23622340e52c63349b9046d08783fa1d167",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactBell_heavy_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/gate_stop.wav",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "3a35186b506a7f46d61f4030b761bf5a2fca251013867c8b3f96d4d56519abcb",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/stress.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "0078b1ffb9eca18fea523dac488a509b76d1141886d05feffab7c6326c0b34c5",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/pipe.ogg",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "b27f9692131a2db7b514584b9aa851b0af06fff6bd18282c769c4418c42f2066",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/impactBell_heavy_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/gasp.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "1e0f237fd625a92183116355049ef327e122524db100dab18a208d72115e3386",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/breath_low.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "5e126e8483917ea429ffc95298a50ca8feaa30f6278d7fc384f43cce449cbd4e",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/breath_run.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "62dce7a0a4498e118a8f57d295214ff75fae1347ba42595d33a2feedca0220f6",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/hurt.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "6275bcbac15d386ba110688a6fba7721250f34c44f489a8e2c2849aff6a51db0",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/relay.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "92aa635754dad8e0733463f60690f189a19c888c9e80e1e9e69fc6edf5dad6a3",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/pump_start.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "54fd8c0099b1ff1be1353b26557d31b6fde0e097966a5967ae8265b7129383a6",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/pump.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "1c7cd503d9e80bc3562e1d9ed520efbbd90d1e891e3af0635d4046f6bd4a2188",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/gate.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "9d3d3a24aac5398bd342186a29729159892e0edbdfcbcd3ae821ef3c04c28f7b",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/vent.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "468cdb6644fe985ebb5ff1c7974b07a87e68d1c8e1339134012dfc6aae0cae8f",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/submerged.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "1cde503637bb18ceeb9fce9c729fed3452e07e73b1cf48ac2fa3bb190000fed8",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/heartbeat.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "deb670cae9fc421102f2ec5ea4ae70ab041b6d467733c6766d5c59bc8096124e",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/ui_move.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "251aa6835dded282ce6560efb95316ee3b558ad074b47b2ce5bfd6a572c24e0d",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/ui_confirm.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "ecd93504d2a8aceae13c1f53d20325d1b4535e860123668b3f86c1f64235094d",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/ui_locked.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "8ebe4efa42836e80bd2f28cff1b9bc05c7f22c08c1d6b870f77872ae4351f300",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/pressure_ready.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "c0f9152b7cd00a1f517d530963a41018eb3727dea644f7ffab691a474a791134",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/ambient_hall.ogg",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "ebfb633b3b7c51cbf4a5fd872aac2b11f432cb4acc778346980a1598648bd1b0",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav",
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/ambient_corridor.ogg",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "b01cd40e9dd95e6fcd1e1903db652dd71f0a6db844d1565f77a3be53d7d5b49d",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav",
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/ambient_mechanical.ogg",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "430181ca5392a1440ad573dcfa4c37b1aae568e2a4e6d790c10fa9d5c1947c42",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav",
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/ambient_archive.ogg",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "4e898cbd4091c2240dde5cfa61941daa7a0d2f01dce4e71e609501bb23f7cacd",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav",
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/ambient_reservoir.ogg",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "b442cf56c76f12f01f31de03db2478fe685602774aacd12d0c47dd7996e78396",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav",
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/ambient_egress.ogg",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "ce68d0b78b36cf9f84af286a1d8455acdeb375a81be254cb046be83e470ee0a9",
+      "processing": "48 kHz; mono/stereo conversion; pitch/filter/envelope processing; peak normalization; see generator",
+      "parents": [
+        "res://assets/audio/v2/source/splash/splash1.wav",
+        "res://assets/audio/v2/source/impactMetal_medium_000.ogg"
+      ],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/leviathan_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "e0838496ed2575b8b6aacf88dbc31acd3936cdf1b542a6fc59187d5c19df152b",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/leviathan_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "bb84d124793b2231f5c042735463e98ae6d474df1f1fc8656a7a6dc4c218c421",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/leviathan_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "b2a4cdfe435e0df823f6481f1c79c391a12af32a71bb558f176d6d8b68e6ff85",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/angler_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "5b9a48e63f7f593bb1ff6af4ca97fec5dffcaf608b2c932bd898d3b01814cc88",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/angler_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "2c983f895e3a3cdc916a8fa0b245628390e2cf4d8398e79570ff641767241644",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/angler_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "8a2080a9d3840c63ed324f430344dd5ea18954b47bde290246907bf4b4261814",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/crab_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "4d40be408ca05e69d80060402a84b457f2ddef7eefcdc0912af3c4529a835370",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/crab_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "66e4c90758d01f61a565407b9acd065ed2447436bb21876b04164afbbde18cca",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/crab_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "9f7191c42c05304844bd608d26be46342fba0df31b9eea54e0f997a3243d82d9",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/whale_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "bd3d6d6b5b0bdb473724e55025fd0981028b301fff12063093365b6214244291",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/whale_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "2372e94d95b8c2ccacf59f0c504acf2ad3813874a649929c88af5495b43936a3",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/whale_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "1b93c84f51941eccd732c81386e7001f00e7b73c05f5b020e745df638922496d",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/colossus_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "c5866fbddd2d2b8faf7738e2f6eaaf3047ee7bdea951a5097597ab604d874e81",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/colossus_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "b81d782f815a712d78ebd54e1a4a807c52f7e4c25f954b347737cd2fc38ac74d",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/colossus_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "2b15ab577b7b69cb41d8137722a9cd8ac2042e018920b02daafc6c8e6201fe13",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/hunter_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "9ef808db11bf4b516f4ad5dcd300dba576934ce4e81845998480bd87200f4dbf",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/hunter_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "6b2558cd2c92132cd79eaf799243ab9399dacbf6242a8806d4d0b422181c88f9",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/hunter_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "ec527f1c8bca3efcbaf4e7efd0d03ae5f6e7f39485b9fee1e7f0248f7d5dbdaf",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/lurker_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "ef7b7f388079842702b2379e3949fe1297c91be3228ee21d49605da51185dd60",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/lurker_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "26be54dcd1381180ea7beafcf09f1b3b0dc4e8dc415e380eaaaf6ffc6f815a2d",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/lurker_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "0a0d377de8fbfcae014f47778506e2852528569bc9102ffcd3d2a6426286e929",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/drifter_omen.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "638c060a9e12387be0646efa07eb96e633f6433c317eb2883e98c38fe5f0dc27",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/drifter_windup.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "f43f72a5c9fed60af7f40669111c7966413d55d6b35dc95cedb46b15866847fb",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/drifter_hit.wav",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "d48c6b1e6ae324bf23b46d5e8f01ef0460b0f3ec549fdd9de12dc9c461cfbb61",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/base.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "5ad15498e1d8969358f2d7ac1272d06c048de6d01aa25d3034f387ae10b98e08",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/texture.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "ea78884c5a6beaec4849efd3f00c2a34c1cce70c771f7040239a6632ad0caf38",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/pulse.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "d991b4f5d1a731be6e9a6b9dafe8d9fe8b6c71b674711075bd674d58aee05f7f",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/title.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "2bd40fce68de95924ef3caaae9fe3765382eeabdadf53d557364a41d4c8606a5",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/first_dive.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "708d1d7ffa42f9dfc16a151ae6b498d8703285040c83b0a94ba20d197dab37af",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/reservoir.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "62c6be939efb8b5e302015663bfa6ebdb4037022c4e7d96c8ce5db3ce13e6bf1",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/pump.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "6a8e1ebac2bc1740b91c858272965fe53cf0b79b7cc06928a61ae89f707b5b94",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/egress.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "667a981c912687545d38e4fd0db66a20d9d3029fca9037b1ced97496ac7cf579",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/dead.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "4c4464b11ba077b3d5f1c2dd588460d5b6e70a75504471bc4c9a159c73e9b5f9",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/music/won.ogg",
+      "kind": "original",
+      "url": "tools/generate_audio_v2.py",
+      "license": "Original-project",
+      "author": "The Waterhouse project",
+      "sha256": "e3d3a3444597ffe1d449b954b219212ca11d9ac17c3cb1ccd7df2205d7cdffab",
+      "processing": "deterministic offline synthesis; 48 kHz; peak normalization; loop-only periodic join",
+      "parents": [],
+      "download_date": null,
+      "license_file": null
+    },
+    {
+      "file": "res://assets/audio/v2/source/kenney_impact-sounds.zip",
+      "kind": "licensed-recording",
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0-1.0",
+      "author": "Kenney",
+      "sha256": "029d734af1582474edf3a694d1b0cebc97c1c152f2f39fa34d4c2bafc5de77f8",
+      "processing": "unmodified archive downloaded directly from original publisher",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/KENNEY_LICENSE.txt"
+    },
+    {
+      "file": "res://assets/audio/v2/source/splash.7z",
+      "kind": "licensed-recording",
+      "url": "https://opengameart.org/content/water-splashes",
+      "license": "CC-BY-3.0",
+      "author": "Michel Baradari",
+      "sha256": "d77ec6dac46c1db6f2b74d8321911beb27d924faf6968af1a7e2741bd0515439",
+      "processing": "unmodified archive downloaded directly from original publisher",
+      "parents": [],
+      "download_date": "2026-10-09",
+      "license_file": "res://assets/audio/v2/source/WATER_LICENSE.txt"
+    }
+  ],
+  "music_metadata": {
+    "bpm": 60,
+    "beats_per_bar": 4,
+    "layer_duration": 96,
+    "looped": [
+      "base",
+      "texture",
+      "pulse",
+      "title",
+      "pump"
+    ]
+  }
+}

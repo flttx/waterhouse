@@ -362,7 +362,7 @@ func _physics_process(delta: float) -> void:
 		_windup -= delta
 		if _windup <= 0.0:
 			if _seen and distance < 3.8 and _visible_player():
-				player.call("take_damage", attack_damage, "水道中的针齿在你身边合拢了。")
+				player.call("take_damage", attack_damage, "水道中的针齿在你身边合拢了。", self)
 			_windup = -1.0
 			_cooldown = 4.0
 			_quiet = 8.0 * quiet_multiplier
@@ -426,7 +426,7 @@ func _update_colony(delta: float) -> void:
 		awareness = 0.9
 		if _cooldown <= 0.0:
 			omen.emit(global_position, 0.6)
-			player.call("take_damage", attack_damage * 0.18, "漂浮群落的丝状触须夺走了你的呼吸。")
+			player.call("take_damage", attack_damage * 0.18, "漂浮群落的丝状触须夺走了你的呼吸。", self)
 			_cooldown = 1.2
 	else:
 		awareness = move_toward(awareness, 0.0, delta)

@@ -12,7 +12,7 @@ class TestPlayer extends CharacterBody3D:
 		if fleeing:
 			velocity = Vector3.RIGHT * 4.7
 			move_and_slide()
-	func take_damage(amount: float, _reason: String) -> void:
+	func take_damage(amount: float, _reason: String, _source: Node3D = null) -> void:
 		health -= amount
 		dead = health <= 0.0
 

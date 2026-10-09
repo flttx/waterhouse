@@ -26,7 +26,7 @@ $scripts = Get-ChildItem -LiteralPath (Join-Path $projectPath 'scripts') -Filter
 foreach ($scriptFile in $scripts) {
     Invoke-CheckedGodot "parse $($scriptFile.Name)" @('--check-only', '--script', $scriptFile.FullName)
 }
-foreach ($testName in @('player_physics', 'creature_test', 'game_flow', 'traversal_test', 'creature_world_test', 'stalker_test', 'multi_creature_test', 'map_ui_test', 'navigation_test', 'expansion_game_test', 'hazard_test', 'all_creatures_test', 'full_facility_traversal')) {
+foreach ($testName in @('player_physics', 'creature_test', 'game_flow', 'traversal_test', 'creature_world_test', 'stalker_test', 'multi_creature_test', 'map_ui_test', 'navigation_test', 'expansion_game_test', 'hazard_test', 'all_creatures_test', 'full_facility_traversal', 'music_test', 'audio_test', 'audio_routing_test')) {
     $testFile = Join-Path $projectPath "tests\$testName.gd"
     if (Test-Path -LiteralPath $testFile) { Invoke-CheckedGodot $testName @('--script', $testFile) }
     else { Write-Output "FAIL missing regression $testName"; $failed = $true }
@@ -38,6 +38,8 @@ Invoke-CheckedGodot 'runtime smoke (300 frames)' @('--quit-after', '300', '--', 
 $pythonCommand = Get-Command python -ErrorAction SilentlyContinue
 if ($pythonCommand) {
     & $pythonCommand.Source (Join-Path $PSScriptRoot 'lint_sources.py')
+    if ($LASTEXITCODE -ne 0) { $failed = $true }
+    & $pythonCommand.Source (Join-Path $PSScriptRoot 'check_audio_assets.py')
     if ($LASTEXITCODE -ne 0) { $failed = $true }
 } else {
     Write-Output 'FAIL source lint: Python 3 is required for development checks'

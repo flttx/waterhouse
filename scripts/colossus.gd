@@ -249,7 +249,7 @@ func _update_state(delta: float) -> void:
 			if _state_age > 0.22 and not _did_damage:
 				_did_damage = true
 				if _can_hunt_player() and _player_position().distance_to(_attack_target) < 1.6 and _has_line_of_sight(_player_position()) and player.has_method("take_damage"):
-					player.call("take_damage", attack_damage, "深井里的触臂击中了你。")
+					player.call("take_damage", attack_damage, "深井里的触臂击中了你。", self)
 			if _state_age > 1.0:
 				_set_state(State.RETREAT)
 		State.RETREAT:

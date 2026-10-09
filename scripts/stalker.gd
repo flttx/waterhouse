@@ -551,7 +551,7 @@ func _update_attack(delta: float) -> void:
 	_attack_left -= delta
 	if _attack_left <= 0.0:
 		if distance < reach + 0.25 and _has_line_of_sight(target) and player.has_method("take_damage"):
-			player.call("take_damage", attack_damage, "诱饵灯后的巨口闭合了。" if species == "angler" else "档案室的长足截断了去路。")
+			player.call("take_damage", attack_damage, "诱饵灯后的巨口闭合了。" if species == "angler" else "档案室的长足截断了去路。", self)
 		_attack_left = -1.0
 		_set_state(State.RETREAT)
 

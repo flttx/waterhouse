@@ -9,6 +9,7 @@ signal setting_changed(key: String, value: float)
 signal difficulty_changed(key: String)
 signal map_requested
 signal map_close_requested
+signal audio_requested(cue: String)
 
 const INK := Color(0.80, 0.88, 0.84)
 const MUTED := Color(0.44, 0.60, 0.60)
@@ -33,6 +34,9 @@ var font: SystemFont
 var brightness: float = 1.12
 var sensitivity: float = 0.0022
 var volume: float = 0.75
+var sfx_volume: float = 1.0
+var ambient_volume: float = 0.8
+var music_volume: float = 0.6
 var bob: bool = true
 var reduced_grain: bool = false
 var current_page: String = "title"
@@ -174,7 +178,10 @@ func _button(parent: Control, text: String, pos: Vector2, callback: Callable) ->
 		style.content_margin_right = 20
 		button.add_theme_stylebox_override(style_name, style)
 	parent.add_child(button)
-	button.pressed.connect(callback)
+	button.focus_entered.connect(func() -> void: audio_requested.emit("ui_move"))
+	button.pressed.connect(func() -> void:
+		audio_requested.emit("ui_confirm")
+		callback.call())
 	return button
 
 
@@ -218,24 +225,28 @@ func show_page(page: String) -> void:
 		_button(panel, "离开", Vector2(0, 445), func() -> void: quit_requested.emit())
 	elif page == "settings":
 		_label(panel, "调整感官", Vector2(0, 45), 48, INK)
-		_slider(panel, "亮度", 1.0, 1.5, brightness, 148, "brightness")
-		_slider(panel, "声音", 0.0, 1.0, volume, 232, "volume")
-		_slider(panel, "鼠标灵敏度", 0.0008, 0.005, sensitivity, 316, "sensitivity")
+		var first_slider := _slider(panel, "亮度", 1.0, 1.5, brightness, 148, "brightness", 0, 360)
+		_slider(panel, "鼠标灵敏度", 0.0008, 0.005, sensitivity, 232, "sensitivity", 0, 360)
+		_slider(panel, "总音量", 0.0, 1.0, volume, 148, "volume", 430, 330)
+		_slider(panel, "音效", 0.0, 1.0, sfx_volume, 232, "sfx_volume", 430, 330)
+		_slider(panel, "环境", 0.0, 1.0, ambient_volume, 316, "ambient_volume", 430, 330)
+		_slider(panel, "音乐", 0.0, 1.0, music_volume, 400, "music_volume", 430, 330)
 		var check := CheckButton.new()
 		check.text = "镜头步行起伏"
-		check.position = Vector2(0, 395)
+		check.position = Vector2(0, 332)
 		check.button_pressed = bob
 		check.add_theme_font_override("font", font)
 		check.toggled.connect(func(value: bool) -> void: bob = value; setting_changed.emit("bob", 1.0 if value else 0.0))
 		panel.add_child(check)
 		var grain := CheckButton.new()
 		grain.text = "减少胶片颗粒"
-		grain.position = Vector2(240, 395)
+		grain.position = Vector2(0, 387)
 		grain.button_pressed = reduced_grain
 		grain.add_theme_font_override("font", font)
 		grain.toggled.connect(func(value: bool) -> void: reduced_grain = value; setting_changed.emit("grain", 0.0 if value else 1.0))
 		panel.add_child(grain)
-		focus_button = _button(panel, "返回", Vector2(0, 470), func() -> void: show_page("pause" if get_tree().paused else "title"))
+		_button(panel, "返回", Vector2(0, 492), func() -> void: show_page("pause" if get_tree().paused else "title"))
+		call_deferred("_focus_button", first_slider)
 	elif page == "dead":
 		_label(panel, "水房留下了你", Vector2(0, 45), 48, INK)
 		_label(panel, result_reason, Vector2(0, 129), 20, AMBER)
@@ -431,26 +442,34 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func _focus_button(button: Variant) -> void:
-	if is_instance_valid(button) and button is Button and button.is_inside_tree():
+	if is_instance_valid(button) and button is Control and button.is_inside_tree():
 		button.grab_focus()
 
 
-func _slider(parent: Control, caption: String, low: float, high: float, value: float, y: float, key: String) -> void:
-	_label(parent, caption, Vector2(0, y), 17, INK)
+func _slider(parent: Control, caption: String, low: float, high: float, value: float, y: float, key: String, x: float = 0.0, width: float = 480.0) -> HSlider:
+	_label(parent, caption, Vector2(x, y), 17, INK)
 	var slider := HSlider.new()
-	slider.position = Vector2(0, y + 32)
-	slider.size = Vector2(480, 26)
+	slider.name = key + "_slider"
+	slider.tooltip_text = caption
+	slider.position = Vector2(x, y + 32)
+	slider.size = Vector2(width, 26)
 	slider.min_value = low
 	slider.max_value = high
 	slider.step = (high - low) / 100.0
 	slider.value = value
 	parent.add_child(slider)
+	slider.focus_entered.connect(func() -> void: audio_requested.emit("ui_move"))
+	slider.drag_ended.connect(func(_changed: bool) -> void: audio_requested.emit("ui_confirm"))
 	slider.value_changed.connect(func(v: float) -> void:
 		match key:
 			"brightness": brightness = v
 			"volume": volume = v
+			"sfx_volume": sfx_volume = v
+			"ambient_volume": ambient_volume = v
+			"music_volume": music_volume = v
 			"sensitivity": sensitivity = v
 		setting_changed.emit(key, v))
+	return slider
 
 
 func update_status(player: PlayerController, objective: String, decoys: int, threat: float, delta: float, elapsed: float) -> void:

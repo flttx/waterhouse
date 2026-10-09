@@ -33,7 +33,9 @@ func _run() -> void:
 	expect(game.enemies.size() == 9, "nine actors from eight distinct species exist")
 	expect(game.soundscape.air.stream != null, "offline audio asset loaded")
 	expect(game.soundscape.air.stream.loop_mode != 0, "facility ambience loops")
-	expect(game.soundscape.water.stream.loop_mode != 0, "underwater ambience loops")
+	var underwater_stream := game.soundscape.water.stream as AudioStream
+	var underwater_loops := (underwater_stream is AudioStreamWAV and (underwater_stream as AudioStreamWAV).loop_mode != 0) or (underwater_stream is AudioStreamOggVorbis and (underwater_stream as AudioStreamOggVorbis).loop)
+	expect(underwater_loops, "underwater ambience loops")
 	game.selected_difficulty = "survival"
 	game.start_run()
 	game._set_enemies_enabled(false)

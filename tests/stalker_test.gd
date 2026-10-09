@@ -5,7 +5,7 @@ class TestPlayer extends CharacterBody3D:
 	var light_on: bool = false
 	var dead: bool = false
 	var health: float = 100.0
-	func take_damage(amount: float, _reason: String) -> void:
+	func take_damage(amount: float, _reason: String, _source: Node3D = null) -> void:
 		health -= amount
 		dead = health <= 0.0
 

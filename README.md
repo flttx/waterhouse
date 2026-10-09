@@ -16,7 +16,7 @@ Godot 4.x + GDScript 原生第一人称恐怖潜行垂直切片。探索废弃�
 .\run.ps1 -Editor    # 编辑器
 ```
 
-Windows 0.2 独立包已更新为 `build/TheWaterhouse-Windows-x64.zip`，通过导出、独立 GPU 运行与 ZIP CRC 检查。解压后双击 `TheWaterhouse.exe`，保留同目录 `.pck`；普通玩家无需安装 Godot。包内附中文操作说明与引擎许可证信息。开发导出需与引擎相同版本的 Windows 导出模板。
+Windows 0.3 独立包已更新为 `build/TheWaterhouse-Windows-x64.zip`，通过导出、独立 GPU 运行、PCK 声音资源与 ZIP CRC 检查。解压后双击 `TheWaterhouse.exe`，保留同目录 `.pck`；普通玩家无需安装 Godot。包内附中文操作说明、引擎许可证与声音素材鸣谢。开发导出需与引擎相同版本的 Windows 导出模板。
 
 源码调试使用 `run.ps1 -Editor` 后按 F5，可用 GDScript 断点与 Remote 场景树查看运行状态。建筑与设备仍由脚本在运行时组装，编辑器静态场景不代表完整设施。
 
@@ -70,7 +70,7 @@ M 设施全图在所有难度可查，只有探索显示怪物和路线。导航
 .\tools\export_windows.ps1
 ```
 
-源码检查需要 Python 3（标准库，无额外包）及 Godot 4.7.2 Windows；游戏本体不需要 Python。检查包含资源导入、运行脚本解析、原生角色物理、生物感知与导航、地图及难度、十设备流程、实际关卡通行、生物实景回归和运行冒烟，以及源码空白/调试输出 lint。原生 Godot 导入可能在解析错误时返回 0，检查脚本同时检查错误日志。
+源码检查需要 Python 3（标准库，无额外包）、PATH 上的 FFmpeg/FFprobe 和 Godot 4.7.2 Windows；游戏本体不需要 Python 或 FFmpeg。检查包含资源导入、脚本解析、原生角色物理、生物感知与导航、地图及难度、十设备流程、实际关卡通行、生物实景、音频/配乐/活跃路由回归、声音来源/循环/峰值检查和运行冒烟，以及源码空白/调试输出 lint。原生 Godot 导入可能在解析错误时返回 0，检查脚本同时检查错误日志。
 
 Windows 检查默认使用 WASAPI 音频驱动。Headless 的 Dummy 音频在退出时可能产生 WAV 资源泄漏报告；实际运行与脚本错误仍按失败处理。
 
@@ -80,7 +80,28 @@ GPU 视觉回归（需要图形桌面）：
 godot_console --path . --script tools/capture.gd
 ```
 
-实际图片保存在 `artifacts/`。本轮 UI 证据为 `game_ui_*_1280x800.png` / `game_ui_*_1440x900.png`，生物为各 `*_preview.png`；`waterhouse.png` 是第一阶段截图。原始声音由 `python tools/generate_audio.py` 离线生成，并通过 Godot 3D 音源、混响和水下低通混音。
+实际图片保存在 `artifacts/`。设施 UI 证据为 `game_ui_*_1280x800.png` / `game_ui_*_1440x900.png`，生物为各 `*_preview.png`；`waterhouse.png` 是第一阶段截图。
+
+## 声音与动态配乐 · 0.3
+
+新增 66 个声音事件、83 份音效和 10 份配乐素材：四类材质脚步、游泳/潜水/浮出/爬梯/呼吸、设备操作与中止、六组区域环境，以及八类生物各自的预兆、攻击前摇和实际命中声音。28 个世界瞬时声部与 4 个界面声部限制声音叠加；最近八个位置声源每秒五次检测实际障碍遮挡，包括泵。混音与 AI 听声规则独立。
+
+总音量、音效、环境、音乐在设置中分别控制，零值完全静音；旧设置保留并为新增项使用默认值。跨区域两秒淡化，水上/水下半秒过渡。暂停和地图冻结声音与配乐进度，菜单反馈继续可用。
+
+配乐采用三层同时间轴的 96 秒原创音轨，使用 Godot 原生同步播放器。平静探索留白 20–45 秒，危险持续后逐渐增加纹理与脉冲；前摇、缺氧和关键设备声音会压低音乐。首次下潜、地下水库、排水、撤离及结局有短段落，重新开始会重置触发记录。
+
+44 份成品实际采用 Kenney CC0 和 Michel Baradari CC BY 3.0 录音，其余为原创合成；呼吸素材仍为合成。作者、来源、许可证、加工方式和 SHA-256 见 `assets/audio/AUDIO_SOURCES.md` 及 `audio_v2_manifest.json`，Windows 包携带 `AUDIO_CREDITS.txt`。旧 13 个合成 WAV 与生成器保留为历史资源。
+
+素材加工需要 Python 3 与 PATH 上的 FFmpeg/FFprobe，无额外 Python 包；生成时使用仓库内原录音，运行游戏无需这些工具或联网。
+
+```powershell
+python tools/generate_audio_v2.py
+python tools/check_audio_assets.py
+godot_console --audio-driver WASAPI --path . --script tests/audio_capture.gd
+python tools/check_audio_mix.py
+```
+
+实机脚本会捕获两种窗口的设置界面及一段约 39 秒的混音，保存在 `artifacts/audio_settings_*.png` 与 `audio-mix-preview.wav`。脚本刻意切换声音场景，用于验收混音，不是完整关卡通关录像。声音机制、资产及峰值自动验证通过后，仍需耳机/扬声器整局试听确认方向、重复疲劳和恐怖节奏。
 
 ## 工程
 
