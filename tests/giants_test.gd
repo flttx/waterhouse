@@ -43,7 +43,15 @@ func _run() -> void:
 	colossus.player = player
 	for frame in 5:
 		await physics_frame
-	_check(whale._navigation_ready and whale._graph.get_point_count() > 300, "whale: native deep-basin graph built")
+	# Wide tail clearance deliberately removes head-only grid cells. Require a
+	# connected, traversable route across the basin instead of an obsolete count.
+	var west := whale._graph.get_closest_point(Vector3(112, -12, 43))
+	var east := whale._graph.get_closest_point(Vector3(162, -12, 43))
+	var crossing := whale._graph.get_point_path(west, east)
+	var crossing_clear := crossing.size() > 2 and crossing[0].distance_to(crossing[-1]) > 35.0
+	for segment in range(1, crossing.size()):
+		crossing_clear = crossing_clear and whale._clear_motion(crossing[segment - 1], crossing[segment])
+	_check(whale._navigation_ready and crossing_clear, "whale: full-tail-clear route connects opposite basin sides")
 	_check(whale._skeleton != null and whale._bone_rest.size() == whale._skeleton.get_bone_count() and whale._bone_rest.size() > 25, "whale: original skeleton posed along travelled curve")
 	_check(not whale._skin_materials.is_empty() and not colossus._skin_materials.is_empty(), "both giants preserve actual GLB textures")
 	var model_bounds := _model_bounds(colossus)

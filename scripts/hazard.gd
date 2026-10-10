@@ -10,6 +10,7 @@ signal omen(position: Vector3, strength: float)
 enum State { DORMANT, PATROL, INVESTIGATE, SEARCH, CHASE, RETREAT }
 var species: String = "hunter"
 var world: Node3D
+var encounter_director: Node
 var player: CharacterBody3D
 var enabled: bool = false
 var pressure: float = 0.0
@@ -283,6 +284,14 @@ func reset_creature() -> void:
 	threat_changed.emit(0.0)
 
 
+func encounter_is_active() -> bool:
+	return state == State.CHASE or _windup >= 0.0
+
+
+func _may_pursue() -> bool:
+	return encounter_director == null or encounter_director.request_pursuit(self)
+
+
 func hear_noise(pos: Vector3, loudness: float) -> void:
 	if not enabled or species == "drifter" or _quiet > 0.0 or not pos.is_finite() or not is_finite(loudness) or loudness <= 0.0:
 		return
@@ -293,6 +302,11 @@ func hear_noise(pos: Vector3, loudness: float) -> void:
 		hearing_range *= 0.22
 	if pos.distance_to(global_position) > hearing_range:
 		return
+	if state == State.CHASE:
+		if _seen or loudness < 0.85:
+			return
+		state = State.INVESTIGATE
+		_windup = -1.0
 	_last_seen = pos
 	_last_seen.y = clampf(pos.y, -4.6, -1.8)
 	_noise_left = 9.0
@@ -343,7 +357,7 @@ func _physics_process(delta: float) -> void:
 			_last_seen = player.global_position
 			_last_seen.y = clampf(_last_seen.y + 0.8, -4.6, -1.8)
 			_lost = 0.0
-			if species == "hunter" and _quiet <= 0.0:
+			if species == "hunter" and _quiet <= 0.0 and _may_pursue():
 				if state != State.CHASE:
 					_pursuit_left = 20.0
 				state = State.CHASE
@@ -355,7 +369,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var distance: float = INF if player == null else global_position.distance_to(player.global_position + Vector3.UP * 0.6)
 	awareness = move_toward(awareness, 1.0 if _seen and _quiet <= 0.0 else 0.0, delta * 0.9)
-	threat_changed.emit(awareness)
+	threat_changed.emit(minf(awareness, 0.55) if encounter_director != null and not encounter_is_active() else awareness)
 	if _mouth != null:
 		_mouth.scale.y = lerpf(_mouth.scale.y, 1.7 if _windup >= 0.0 else 1.0, delta * 4.0)
 	if _windup >= 0.0:
@@ -368,7 +382,7 @@ func _physics_process(delta: float) -> void:
 			_quiet = 8.0 * quiet_multiplier
 			state = State.RETREAT
 		return
-	if _seen and distance < 3.5 and _cooldown <= 0.0 and _quiet <= 0.0:
+	if _seen and distance < 3.5 and _cooldown <= 0.0 and _quiet <= 0.0 and _may_pursue():
 		_windup = attack_windup * (1.35 if species == "lurker" else 1.0)
 		attack_started.emit()
 		omen.emit(global_position, 1.0)

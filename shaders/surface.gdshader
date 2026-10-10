@@ -49,8 +49,16 @@ void fragment() {
         color = mix(color, vec3(0.10, 0.15, 0.10), tide * (0.45 + patina * 0.35));
         color *= 1.0 - damp * 0.22;
     }
+    // Broken damp patches retain the dry grout and avoid a uniformly polished floor.
+    float horizontal = smoothstep(0.7, 0.96, n.y);
+    float wet_patch = smoothstep(0.52, 0.75, patina) * horizontal * (1.0 - grout);
+    color *= 1.0 - wet_patch * 0.12;
+    // Only the shallow band receives moving caustics; deep walls remain dark.
+    float shallow = smoothstep(-7.0, -0.7, world_position.y) * (1.0 - smoothstep(-0.35, 0.05, world_position.y));
+    float caustic = pow(max(0.0, sin(p.x * 2.4 + sin(p.y * 1.7 + TIME * 0.35)) * sin(p.y * 2.8 - TIME * 0.28)), 8.0);
+    EMISSION = vec3(0.028, 0.065, 0.058) * caustic * shallow;
     ALBEDO = color;
-    ROUGHNESS = clamp(roughness_value + grout * 0.23 + grit * 0.07 - damp * 0.16, 0.18, 1.0);
+    ROUGHNESS = clamp(roughness_value + grout * 0.23 + grit * 0.07 - damp * 0.16 - wet_patch * 0.18, 0.18, 1.0);
     SPECULAR = 0.42;
     NORMAL_MAP = vec3(0.5 + (grit - 0.5) * 0.05, 0.5 + (patina - 0.5) * 0.035, 1.0);
     NORMAL_MAP_DEPTH = 0.22;

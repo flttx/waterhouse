@@ -26,7 +26,7 @@ $scripts = Get-ChildItem -LiteralPath (Join-Path $projectPath 'scripts') -Filter
 foreach ($scriptFile in $scripts) {
     Invoke-CheckedGodot "parse $($scriptFile.Name)" @('--check-only', '--script', $scriptFile.FullName)
 }
-foreach ($testName in @('player_physics', 'creature_test', 'game_flow', 'traversal_test', 'creature_world_test', 'stalker_test', 'multi_creature_test', 'map_ui_test', 'navigation_test', 'expansion_game_test', 'hazard_test', 'all_creatures_test', 'full_facility_traversal', 'music_test', 'audio_test', 'audio_routing_test')) {
+foreach ($testName in @('player_physics', 'creature_test', 'game_flow', 'traversal_test', 'creature_world_test', 'stalker_test', 'multi_creature_test', 'map_ui_test', 'navigation_test', 'expansion_game_test', 'hazard_test', 'all_creatures_test', 'full_facility_traversal', 'music_test', 'audio_test', 'audio_routing_test', 'encounter_test', 'visual_polish_test', 'tail_clearance_test')) {
     $testFile = Join-Path $projectPath "tests\$testName.gd"
     if (Test-Path -LiteralPath $testFile) { Invoke-CheckedGodot $testName @('--script', $testFile) }
     else { Write-Output "FAIL missing regression $testName"; $failed = $true }

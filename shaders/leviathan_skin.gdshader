@@ -4,10 +4,12 @@ render_mode cull_back, diffuse_burley, specular_schlick_ggx;
 uniform sampler2D skin_texture : source_color, filter_linear_mipmap;
 uniform sampler2D skin_normal : hint_normal, filter_linear_mipmap;
 uniform float arousal : hint_range(0.0, 1.0) = 0.0;
+// Original normalized texture-space coordinates survive the metric swim rebind.
+uniform mat4 rest_to_model = mat4(1.0);
 varying vec3 rest_position;
 
 void vertex() {
-	rest_position = VERTEX;
+	rest_position = (rest_to_model * vec4(VERTEX, 1.0)).xyz;
 }
 
 void fragment() {

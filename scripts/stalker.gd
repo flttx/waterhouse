@@ -11,6 +11,7 @@ enum State { DORMANT, PATROL, INVESTIGATE, SEARCH, CHASE, RETREAT }
 
 @export_enum("angler", "crab") var species: String = "angler"
 
+var encounter_director: Node
 var player: CharacterBody3D
 var enabled: bool = false
 var pressure: float = 0.0
@@ -233,7 +234,8 @@ func _sense_player(delta: float) -> void:
 		_last_seen = _clamp_point(target)
 		_lost_seconds = 0.0
 		var proximity := 1.0 - clampf(distance / range_limit, 0.0, 1.0)
-		awareness = minf(1.0, awareness + delta * (0.32 + proximity * 0.9) * (1.45 if lamp else 1.0))
+		var concealment := 0.55 if not lamp and player.velocity.length() < 2.6 else 1.0
+		awareness = minf(1.0, awareness + delta * concealment * (0.32 + proximity * 0.9) * (1.45 if lamp else 1.0))
 		if awareness >= 0.67 and _attack_cooldown <= 0.0:
 			_set_state(State.CHASE)
 		elif awareness > 0.2 and state in [State.DORMANT, State.PATROL]:
@@ -271,7 +273,13 @@ func hear_noise(position: Vector3, loudness: float) -> void:
 	_set_state(State.INVESTIGATE)
 
 
+func encounter_is_active() -> bool:
+	return state == State.CHASE
+
+
 func _set_state(next: State) -> void:
+	if next == State.CHASE and state != State.CHASE and encounter_director != null and not encounter_director.request_pursuit(self):
+		return
 	if state == next:
 		return
 	state = next
@@ -567,4 +575,4 @@ func _update_omen(delta: float) -> void:
 		_omen_clock = _rng.randf_range(7.0, 12.0)
 		if state != State.DORMANT:
 			omen.emit(Vector3(global_position.x, 0.0, global_position.z), 0.35 + arousal * 0.3)
-	threat_changed.emit(arousal)
+	threat_changed.emit(minf(arousal, 0.55) if encounter_director != null and not encounter_is_active() else arousal)

@@ -16,7 +16,7 @@ Godot 4.x + GDScript 原生第一人称恐怖潜行垂直切片。探索废弃�
 .\run.ps1 -Editor    # 编辑器
 ```
 
-Windows 0.3 独立包已更新为 `build/TheWaterhouse-Windows-x64.zip`，通过导出、独立 GPU 运行、PCK 声音资源与 ZIP CRC 检查。解压后双击 `TheWaterhouse.exe`，保留同目录 `.pck`；普通玩家无需安装 Godot。包内附中文操作说明、引擎许可证与声音素材鸣谢。开发导出需与引擎相同版本的 Windows 导出模板。
+Windows 0.4.1 独立包已更新为 `build/TheWaterhouse-Windows-x64.zip`，通过导出、独立 GPU 运行、PCK 声音资源与 ZIP CRC 检查。解压后双击 `TheWaterhouse.exe`，保留同目录 `.pck`；普通玩家无需安装 Godot。包内附中文操作说明、引擎许可证与声音素材鸣谢。开发导出需与引擎相同版本的 Windows 导出模板。
 
 源码调试使用 `run.ps1 -Editor` 后按 F5，可用 GDScript 断点与 Remote 场景树查看运行状态。建筑与设备仍由脚本在运行时组装，编辑器静态场景不代表完整设施。
 
@@ -81,6 +81,32 @@ godot_console --path . --script tools/capture.gd
 ```
 
 实际图片保存在 `artifacts/`。设施 UI 证据为 `game_ui_*_1280x800.png` / `game_ui_*_1440x900.png`，生物为各 `*_preview.png`；`waterhouse.png` 是第一阶段截图。
+
+## 巨兽全身通行 · 0.4.1
+
+利维坦与盲鲸按完整身体宽度规划路径，连续胶囊包络检查身体和尾鳍；不安全的移动会回退并重新规划。原模型全部顶点、UV与纹理保留，启动时重绑局部纵向骨链，修复自动蒙皮的远轴权重和急转时历史路径截角。身体保留受约束的游泳摆动。
+
+新增 `tests/tail_clearance_test.gd` 在真实设施内反复反向、俯仰转向，按实际蒙皮矩阵审计两只巨兽的完整网格，同时检查持续移动与停滞。`--capture` 可生成隐藏水面的诊断俯视图，不改变正式游戏水面和灯光。
+
+```powershell
+godot_console --headless --audio-driver WASAPI --path . --script tests/tail_clearance_test.gd
+godot_console --audio-driver WASAPI --path . --script tests/tail_clearance_test.gd -- --capture
+```
+
+## 遭遇与重点空间 · 0.4
+
+主动猎手共享追击名额：探索/求生最多一只，深渊最多两只；漂浮群落仍是接触危险。持续暴露会先触发生物预兆，再进入追击。脱险后分别留出 10/7/4 秒喘息，上一只猎手额外让位 3 秒；暂停冻结计时，新局清空记录。
+
+主巨兽的听声现在受实体障碍衰减；Hunter 丢失视线后可被强金属诱饵引走。普通游速或更慢且关闭手电时，利维坦、鮟鱇和巨蟹的视觉觉察积累降低；这是角色灯光/速度规则，不是实时环境照度测量。利维坦与盲鲸急转时降低推进速度，长尾仍沿历史路径摆动，没有新增逐骨刚体碰撞。
+
+主水房检修桁架、首次下潜区深度标识与悬浮颗粒、地下库吊具和局部维修照明增强空间识别；表面加入破碎湿斑及浅水焦散。视觉装饰保持原有碰撞和通行路线。
+
+```powershell
+godot_console --headless --audio-driver WASAPI --path . --script tests/encounter_test.gd
+godot_console --audio-driver WASAPI --path . --script tests/visual_polish_test.gd
+```
+
+后一个命令输出三处原生场景截图到 `artifacts/polish_*.png`；截图使用实际手电参数但不含 HUD 后期，不替代真人整局体验。
 
 ## 声音与动态配乐 · 0.3
 

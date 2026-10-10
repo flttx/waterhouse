@@ -45,6 +45,7 @@ var pump_noise_clock: float = 0.0
 var settings := {"brightness": 1.12, "volume": 0.75, "sfx_volume": 1.0, "ambient_volume": 0.8, "music_volume": 0.6, "sensitivity": 0.0022, "bob": 1.0, "grain": 1.0, "difficulty": "survival"}
 var operating_device: WaterhouseDevice
 var fatal_hit_cue: String = ""
+var encounter_director: Node
 var enemies: Array[CharacterBody3D] = []
 var enemy_threats: Dictionary[int, float] = {}
 var selected_difficulty: String = "survival"
@@ -75,6 +76,11 @@ func _ready() -> void:
 	creature.enabled = false
 	enemies.append(creature)
 	_build_enemies()
+	encounter_director = preload("res://scripts/encounter_director.gd").new()
+	encounter_director.process_mode = Node.PROCESS_MODE_PAUSABLE
+	add_child(encounter_director)
+	for enemy: CharacterBody3D in enemies:
+		enemy.set("encounter_director", encounter_director)
 	navigation = WaterhouseNavigation.new()
 	navigation.configure(world)
 	_build_devices()
@@ -222,6 +228,7 @@ func start_run() -> void:
 	purge_remaining = PURGE_SECONDS
 	elapsed = 0.0
 	run_difficulty = selected_difficulty
+	encounter_director.reset_run(run_difficulty)
 	var profile := WaterhouseDifficulty.profile(run_difficulty)
 	decoys = int(profile["decoys"])
 	player.breath_seconds = float(profile["breath_seconds"])

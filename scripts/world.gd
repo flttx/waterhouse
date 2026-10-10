@@ -103,6 +103,7 @@ func _ready() -> void:
 	_make_lighting()
 	_make_signage()
 	_make_surface_debris()
+	_make_atmospheric_landmarks()
 	_make_navigation_metadata()
 	if batch_static_boxes:
 		_batch_static_boxes()
@@ -770,6 +771,8 @@ func _external_water(bounds: Rect2, node_name: String, analytic_lamps: bool = tr
 	material.set_shader_parameter("analytic_lamps", analytic_lamps)
 	_basin_materials.append(material)
 	var center := bounds.get_center()
+	if center.is_equal_approx(Vector2(137, 43)):
+		material.set_shader_parameter("inspection_reflection", true)
 	_water_plane(node_name, Vector3(center.x, 0, center.y), bounds.size, mini(160, int(bounds.size.x * 1.2)), mini(160, int(bounds.size.y * 1.2)), material)
 
 
@@ -1038,6 +1041,107 @@ func _make_signage() -> void:
 	for side in [-1.0, 1.0]:
 		for depth in [-2.0, -5.0, -8.0, -11.0]:
 			_label("%02d m" % int(-depth), Vector3(side * 18.97, depth, 35.0), Vector3(0, -side * PI * 0.5, 0), 0.004, Color(0.39, 0.53, 0.48))
+
+
+func _make_atmospheric_landmarks() -> void:
+	# Elevated, non-traversable dressing: navigation and sight-blocking collisions stay authored.
+	for z in [-1.2, 1.2]:
+		_beam("InspectionCraneRail", Vector3(-23, 15, z), Vector3(23, 15, z), 0.26, 0.55, _rust)
+	for x in range(-21, 23, 3):
+		_beam("InspectionCraneBrace", Vector3(float(x), 15, -1.2), Vector3(float(x) + 1.5, 15, 1.2), 0.12, 0.12, _metal)
+	_box("CraneServiceCarriage", Vector3(-7, 14.5, 0), Vector3(3.3, 0.8, 3.2), _yellow)
+	_accent_spot(Vector3(-7, 13.7, 3.0), Vector3(-7, 15, 0), Color(0.66, 0.48, 0.29), 5.0, 16.0)
+	_pipe("CraneAbandonedCable", Vector3(-7, 14.1, 0), Vector3(-7, 8.0, 0), 0.045, _rust)
+	_label("07 / 检修吊机", Vector3(-7, 14.45, 1.63), Vector3(0, PI, 0), 0.0028, Color(0.65, 0.57, 0.36))
+	_box("CraneWorkLamp", Vector3(-7, 13.7, 3.0), Vector3(0.7, 0.18, 0.3), _warm_emission)
+	_box("DeckInspectionLamp", Vector3(-23.65, 3.0, 28), Vector3(0.18, 0.30, 0.7), _warm_emission)
+	_accent_spot(Vector3(-22.4, 2.6, 28), Vector3(-21, 0.65, 30), Color(0.65, 0.49, 0.31), 3.0, 12.0)
+	# First dive: a readable way back, with a shallow light pocket that ends before the task bay.
+	for depth in [-1.0, -3.0, -5.0, -7.0]:
+		_box("DiveDepthStripe", Vector3(-18.975, depth, 22), Vector3(0.035, 0.09, 1.2), _yellow)
+		_label("%02d M" % int(-depth), Vector3(-18.94, depth + 0.25, 22), Vector3(0, PI * 0.5, 0), 0.003, Color(0.46, 0.65, 0.57))
+	_label("S-01 / 南阀 ↓\n返回池梯 ↑", Vector3(-18.94, -2.1, 20.3), Vector3(0, PI * 0.5, 0), 0.0032, Color(0.57, 0.65, 0.43))
+	var dive_light := _lamp(Vector3(-18.4, -0.9, 22), Color(0.20, 0.49, 0.46), 0.7, 7.0)
+	dive_light.name = "FirstDiveLightPocket"
+	_box("SouthFilterInspectionLamp", Vector3(-11.8, -3.5, 19.0), Vector3(0.35, 0.16, 0.25), _cyan_emission)
+	_accent_spot(Vector3(-15, -3.2, 21), Vector3(-12.8, -6, 17), Color(0.26, 0.50, 0.54), 5.0, 9.0)
+	_silt_volume("FirstDiveSuspension", Vector3(-10, -5.8, 22), Vector3(16, 10, 22), 260, 71)
+	_silt_volume("ReservoirSuspension", Vector3(137, -9, 43), Vector3(67, 17, 37), 480, 93)
+	# Reservoir landmark: a disused circular maintenance cradle suspended far above the broken bridge.
+	var ring_mesh := TorusMesh.new()
+	ring_mesh.inner_radius = 3.9
+	ring_mesh.outer_radius = 4.2
+	ring_mesh.rings = 40
+	ring_mesh.ring_segments = 8
+	var ring := MeshInstance3D.new()
+	ring.name = "ReservoirMaintenanceCradle"
+	ring.mesh = ring_mesh
+	ring.material_override = _rust
+	ring.position = Vector3(137, 9, 43)
+	ring.rotation_degrees.z = 11.0
+	add_child(ring)
+	for offset in [Vector3(-3, 0, -2), Vector3(3, 0, -2), Vector3(0, 0, 3.5)]:
+		_pipe("CradleSuspension", Vector3(137, 19.7, 43) + offset, Vector3(137, 9.7, 43) + offset, 0.05, _rust)
+	_box("ReservoirInspectionLamp", Vector3(137, 9.4, 43), Vector3(1.1, 0.15, 0.7), _warm_emission)
+	_accent_spot(Vector3(137, 7.4, 43), Vector3(141, 9, 43), Color(0.70, 0.49, 0.28), 7.0, 12.0)
+	_box("BridgeWorkLamp", Vector3(164, 2.2, 41.95), Vector3(0.15, 0.15, 0.12), _warm_emission)
+	_accent_spot(Vector3(164, 2.3, 42.3), Vector3(163, 0.65, 43), Color(0.59, 0.48, 0.32), 3.0, 13.0)
+	var inspection := SpotLight3D.new()
+	inspection.name = "ReservoirInspectionCone"
+	inspection.position = Vector3(137, 9.2, 43)
+	inspection.rotation_degrees.x = -90
+	inspection.light_color = Color(0.72, 0.49, 0.24)
+	inspection.light_energy = 2.0
+	inspection.spot_range = 24
+	inspection.spot_angle = 27
+	inspection.spot_attenuation = 1.4
+	inspection.shadow_enabled = true
+	add_child(inspection)
+	for depth in [-2.0, -6.0, -10.0, -14.0, -18.0, -22.0]:
+		_box("ReservoirDepthStripe", Vector3(172.97, depth, 53), Vector3(0.025, 0.12, 2.4), _yellow)
+		_label("%02d M" % int(-depth), Vector3(172.94, depth + 0.45, 53), Vector3(0, -PI * 0.5, 0), 0.0048, Color(0.44, 0.58, 0.49))
+	_label("水下检修 / 09 M\n回程池梯 →", Vector3(147.25, 2.95, 43), Vector3(0, PI * 0.5, 0), 0.0033, Color(0.65, 0.57, 0.37))
+
+
+func _accent_spot(origin: Vector3, target: Vector3, color: Color, energy: float, reach: float) -> void:
+	# Separate spot budget avoids starving local keys in Compatibility's crowded omni list.
+	var light := SpotLight3D.new()
+	light.name = "InspectionAccentLight"
+	light.position = origin
+	light.light_color = color
+	light.light_energy = energy
+	light.spot_range = reach
+	light.spot_angle = 65
+	light.spot_attenuation = 0.7
+	light.shadow_enabled = false
+	add_child(light)
+	light.look_at(target)
+
+
+func _silt_volume(node_name: String, center: Vector3, extent: Vector3, count: int, seed_value: int) -> void:
+	# One draw per volume, deterministic placement, zero physics or per-frame CPU particle work.
+	var random := RandomNumberGenerator.new()
+	random.seed = seed_value
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.035, 0.035)
+	var multi := MultiMesh.new()
+	multi.transform_format = MultiMesh.TRANSFORM_3D
+	multi.mesh = mesh
+	multi.instance_count = count
+	for index in range(count):
+		var point := Vector3(random.randf_range(-0.5, 0.5), random.randf_range(-0.5, 0.5), random.randf_range(-0.5, 0.5)) * extent
+		multi.set_instance_transform(index, Transform3D(Basis.IDENTITY, point))
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://shaders/suspended_silt.gdshader")
+	var instance := MultiMeshInstance3D.new()
+	instance.name = node_name
+	instance.position = center
+	instance.multimesh = multi
+	instance.material_override = material
+	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	instance.custom_aabb = AABB(-extent * 0.5 - Vector3.ONE, extent + Vector3.ONE * 2)
+	instance.visibility_range_end = 65
+	add_child(instance)
 
 
 func _make_surface_debris() -> void:

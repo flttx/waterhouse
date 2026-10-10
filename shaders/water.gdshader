@@ -8,6 +8,7 @@ uniform float time_offset = 0.0;
 uniform vec2 pool_center = vec2(0.0, 0.0);
 uniform vec2 pool_half_size = vec2(19.0, 42.0);
 uniform bool analytic_lamps = true;
+uniform bool inspection_reflection = false;
 varying vec3 world_position;
 
 float height_at(vec2 p, float t) {
@@ -51,8 +52,14 @@ void fragment() {
             glint += exp(-strip_x * strip_x * 28.0 - strip_z * strip_z * 5.0);
         }
     }
+    float inspection_glint = 0.0;
+    if (inspection_reflection && reflected_ray.y > 0.01 && camera_world.y > 0.0) {
+        vec3 lamp_hit = world_position + reflected_ray * ((9.4 - world_position.y) / reflected_ray.y);
+        vec2 offset = lamp_hit.xz - vec2(137.0, 43.0);
+        inspection_glint = exp(-dot(offset, offset) * 3.0);
+    }
     ALBEDO = mix(water_color.rgb, vec3(0.13, 0.24, 0.25), fresnel * 0.43) + foam;
-    EMISSION = vec3(0.012, 0.042, 0.049) * (1.0 + h * 2.0) + vec3(0.28, 0.54, 0.58) * glint * fresnel;
+    EMISSION = vec3(0.012, 0.042, 0.049) * (1.0 + h * 2.0) + vec3(0.28, 0.54, 0.58) * glint * fresnel + vec3(0.48, 0.29, 0.10) * inspection_glint * fresnel;
     METALLIC = 0.32;
     ROUGHNESS = 0.15 + wavelets * 0.03;
     SPECULAR = 0.78;

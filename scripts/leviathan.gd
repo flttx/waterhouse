@@ -23,6 +23,7 @@ const ATTACK_WINDUP := 0.9
 @export var patrol_speed: float = 2.25
 @export var pursuit_speed: float = 5.15
 
+var encounter_director: Node
 var player: CharacterBody3D
 var enabled: bool = false
 var pressure: float = 0.0
@@ -66,6 +67,7 @@ var _bone_rest: Array[Transform3D] = []
 var _jaw_bones: Array[int] = []
 var _skin_materials: Array[ShaderMaterial] = []
 var _navigation_ready: bool = false
+var _body_spine: RefCounted
 
 @onready var _visual: Node3D = $Visual
 
@@ -76,6 +78,11 @@ func _ready() -> void:
 	_rng.randomize()
 	_probe.radius = BODY_RADIUS
 	_configure_model()
+	_body_spine = preload("res://scripts/body_spine.gd").new()
+	_body_spine.configure(self)
+	# Every future cross section, including the wide tail fin, traverses this route.
+	# Reserve its full radius now; head-only clearance cannot protect a following tail.
+	_probe.radius = maxf(_probe.radius, _body_spine.radius + _body_spine.STEP)
 	reset_creature()
 	_build_navigation.call_deferred()
 
@@ -161,9 +168,13 @@ func _difficulty_value(config: Dictionary, key: String, fallback: float, low: fl
 
 
 func hear_noise(position: Vector3, loudness: float) -> void:
-	if not enabled or loudness <= 0.0 or _noise_cooldown > 0.0 or state == State.RETREAT:
+	if not enabled or not position.is_finite() or not is_finite(loudness) or loudness <= 0.0 or _noise_cooldown > 0.0 or state == State.RETREAT:
 		return
 	var intensity := clampf(loudness, 0.0, 1.5)
+	var query := PhysicsRayQueryParameters3D.create(global_position, position, WORLD_MASK)
+	query.exclude = [get_rid()]
+	if not get_world_3d().direct_space_state.intersect_ray(query).is_empty():
+		intensity *= 0.22
 	var hearing_range := (9.0 + intensity * 27.0 + clampf(pressure, 0.0, 1.0) * 6.0) * detection_multiplier
 	if global_position.distance_to(position) > hearing_range:
 		return
@@ -267,8 +278,9 @@ func _sense_player(delta: float) -> void:
 		_last_seen = _clamp_water_point(target)
 		_lost_seconds = 0.0
 		var proximity := 1.0 - clampf(distance / range_limit, 0.0, 1.0)
+		var concealment := 0.55 if not lamp and player.velocity.length() < 2.6 else 1.0
 		var gain := (0.22 + proximity * 0.82) * (1.55 if lamp else 1.0)
-		awareness = clampf(awareness + delta * gain, 0.0, 1.0 if wet else 0.5)
+		awareness = clampf(awareness + delta * gain * concealment, 0.0, 1.0 if wet else 0.5)
 		if wet and awareness >= 0.67 and _attack_cooldown <= 0.0:
 			_set_state(State.CHASE)
 		elif not wet and awareness > 0.25 and state in [State.DORMANT, State.PATROL]:
@@ -287,7 +299,13 @@ func _has_line_of_sight(target: Vector3) -> bool:
 	return hit.is_empty() or hit.get("collider") == player
 
 
+func encounter_is_active() -> bool:
+	return state == State.CHASE
+
+
 func _set_state(next: State) -> void:
+	if next == State.CHASE and state != State.CHASE and encounter_director != null and not encounter_director.request_pursuit(self):
+		return
 	if state == next:
 		return
 	state = next
@@ -467,7 +485,14 @@ func _update_movement(delta: float) -> void:
 	if desired.length_squared() < 0.1:
 		desired = _heading
 	desired = _avoid_obstacle(desired)
-	_heading = _heading.slerp(desired, minf(1.0, delta * (2.1 if state == State.CHASE else 1.2))).normalized()
+	# Bound curvature by travelled distance; rotation in place used to whip the tail.
+	var turn_limit := delta * maxf(velocity.length() / maxf(_body_spine.radius, 2.5), 0.9)
+	var angle := _heading.angle_to(desired)
+	if angle > 0.0001:
+		var axis := _heading.cross(desired)
+		if axis.length_squared() < 0.0001:
+			axis = Vector3.UP
+		_heading = _heading.rotated(axis.normalized(), minf(angle, turn_limit)).normalized()
 	var speed := patrol_speed
 	match state:
 		State.DORMANT:
@@ -482,10 +507,25 @@ func _update_movement(delta: float) -> void:
 			speed = 3.5
 	if _attack_left >= 0.0:
 		speed = 0.8
+	# Slow propulsion through tight turns: the long spine needs room to follow.
+	speed *= lerpf(0.35, 1.0, clampf(_heading.dot(desired), 0.0, 1.0))
 	speed *= speed_multiplier
 	velocity = velocity.lerp(_heading * speed, minf(1.0, delta * 2.0))
 	var before := global_position
-	move_and_slide()
+	# Do not let CharacterBody's small head collider slide into a corridor that the
+	# complete silhouette cannot traverse. The accepted path remains the skin path.
+	if _clear_motion(before, before + velocity * delta) and _sphere_is_clear(before + velocity * delta):
+		var previous_history := _history.duplicate()
+		move_and_slide()
+		_record_history()
+		if not _body_spine.is_clear():
+			global_position = before
+			_history = previous_history
+			velocity = Vector3.ZERO
+			_path_clock = 0.0
+	else:
+		velocity = Vector3.ZERO
+		_path_clock = 0.0
 	if global_position.distance_to(before) < delta * 0.25:
 		_blocked_seconds += delta
 	else:
@@ -543,13 +583,12 @@ func _record_history() -> void:
 	if _history.is_empty():
 		_history.push_front(global_position)
 		return
-	_history_distance += global_position.distance_to(_history[0])
+	# Keep fixed anchors; overwriting an accumulated head sample clipped corners.
+	if _history.size() < 2 or global_position.distance_to(_history[1]) >= 0.12:
+		_history.insert(1, _history[0])
 	_history[0] = global_position
-	if _history_distance >= 0.26:
-		_history.push_front(global_position)
-		_history_distance = 0.0
-		while _history.size() > 170:
-			_history.pop_back()
+	while _history.size() > 700:
+		_history.pop_back()
 
 
 func _spine_sample(distance: float) -> Vector3:
@@ -559,11 +598,27 @@ func _spine_sample(distance: float) -> Vector3:
 		if span >= remaining and span > 0.0001:
 			return _history[sample - 1].lerp(_history[sample], remaining / span)
 		remaining -= span
-	return _history[-1] - _heading * remaining
+	var last_direction := _heading
+	if _history.size() > 1:
+		last_direction = (_history[-2] - _history[-1]).normalized()
+	return _history[-1] - last_direction * remaining
+
+
+func body_sections() -> Array[Dictionary]:
+	return _body_spine.sections() if _body_spine != null else []
+
+
+func body_is_clear() -> bool:
+	return _body_spine != null and _body_spine.is_clear()
 
 
 func _pose_body() -> void:
 	if _skeleton == null or _history.is_empty():
+		return
+	if _body_spine != null:
+		_body_spine.pose()
+		for skin in _skin_materials:
+			skin.set_shader_parameter("arousal", clampf(awareness + (0.3 if state == State.CHASE else 0.0), 0.0, 1.0))
 		return
 	var inverse_skeleton := _skeleton.global_transform.affine_inverse()
 	var time := float(Time.get_ticks_msec()) * 0.001
@@ -605,4 +660,6 @@ func _update_omens(delta: float) -> void:
 			threat = maxf(threat, 0.72)
 		elif state == State.DORMANT:
 			threat *= 0.2
+		if encounter_director != null and not encounter_is_active():
+			threat = minf(threat, 0.55)
 		threat_changed.emit(clampf(threat, 0.0, 1.0))

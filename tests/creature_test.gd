@@ -47,8 +47,8 @@ func _run() -> void:
 	creature.player = player
 	await _frames(5)
 	_check(creature._navigation_ready and creature._graph.get_point_count() > 500, "underwater AStar3D grid contains traversable nodes")
-	_check(creature._skeleton != null and creature._skeleton.get_bone_count() == 34, "original 34-bone Tripo rig is active")
-	_check(creature._bone_rest.size() == 34 and not creature._skin_materials.is_empty(), "native skinning and original textured mesh are configured")
+	_check(creature._skeleton != null and creature._skeleton.get_bone_count() == 34 + creature._body_spine.bones.size(), "original 34 bones plus collision-following spine are present")
+	_check(creature._bone_rest.size() == creature._skeleton.get_bone_count() and not creature._skin_materials.is_empty(), "native skinning and original textured mesh are configured")
 
 	creature.global_position = Vector3(-9.0, -5.0, 0.0)
 	player.global_position = Vector3(9.0, -5.75, 0.0)
@@ -135,6 +135,13 @@ func _run() -> void:
 	creature.global_position = Vector3(-9.0, -5.0, 0.0)
 	creature._goal = Vector3(9.0, -5.0, 0.0)
 	creature._heading = Vector3.RIGHT
+	# This fixture teleports the head between cases. Seed a matching legal whole
+	# body before testing physical progress; retaining the old path crosses walls.
+	creature._heading = Vector3.FORWARD
+	creature._history.clear()
+	for sample in 120:
+		creature._history.append(creature.global_position + Vector3.BACK * float(sample) * 0.25)
+	creature._pose_body()
 	creature._path_clock = 0.0
 	creature._state_age = 0.0
 	creature.state = WaterhouseCreature.State.INVESTIGATE

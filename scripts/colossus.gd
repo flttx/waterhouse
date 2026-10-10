@@ -14,6 +14,7 @@ const MOUTH := Vector3(0.0, -0.65, -3.25)
 const SURFACED_Y: float = -5.5
 const WORLD_MASK: int = 1
 
+var encounter_director: Node
 var player: CharacterBody3D
 var enabled: bool = false
 var pressure: float = 0.0
@@ -132,7 +133,7 @@ func _physics_process(delta: float) -> void:
 		skin.set_shader_parameter("arousal", arousal)
 		var direction := _last_seen - global_position
 		skin.set_shader_parameter("head_turn", clampf(atan2(-direction.x, -direction.z), -0.26, 0.26))
-	threat_changed.emit(arousal)
+	threat_changed.emit(minf(arousal, 0.55) if encounter_director != null and not encounter_is_active() else arousal)
 
 func _refresh_player_properties() -> void:
 	if not is_instance_valid(player):
@@ -205,7 +206,13 @@ func hear_noise(position: Vector3, loudness: float) -> void:
 	if state in [State.DORMANT, State.SEARCH]:
 		_set_state(State.WATCH)
 
+func encounter_is_active() -> bool:
+	return state in [State.WINDUP, State.STRIKE]
+
+
 func _set_state(next: State) -> void:
+	if next == State.WINDUP and encounter_director != null and not encounter_director.request_pursuit(self):
+		return
 	if state == next:
 		return
 	state = next

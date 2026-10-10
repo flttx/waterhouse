@@ -1,6 +1,7 @@
 extends SceneTree
-## Real world/player/creature integration. Stationary swimmers keep native
+## Real world/player/creature integration. Scripted swimmers keep native
 ## capsules, camera, medium detection and damage, but omit controls/oxygen.
+## A swimmer readjusts inside actual cover when the animal circles the baffle.
 ## High health lets both encounters finish rather than ending on first death.
 
 var _checks: int = 0
@@ -63,10 +64,11 @@ func _run() -> void:
 	var last_position := creature.global_position
 	var last_state := creature.state
 	var phase: int = 0
-	var phase_started: float = 0.0
 	var noise_clock: float = 0.0
 	var covered: bool = false
-	while _simulated < 120.0:
+	# Sound no longer travels through every baffle: wait for completed encounters,
+	# with a hard bound, instead of teleporting at obsolete fixed arrival times.
+	while _simulated < 240.0 and (phase < 3 or _simulated < 120.0):
 		await physics_frame
 		var delta := creature.get_physics_process_delta_time()
 		_largest_step = maxf(_largest_step, delta)
@@ -98,26 +100,24 @@ func _run() -> void:
 		if phase == 0 and creature.state == WaterhouseCreature.State.PATROL:
 			_patrol_seen = true
 			phase = 1
-			phase_started = _simulated
 			_place_swimmer(player, Vector3(-8.9, -7.62, 18.2))
 			noise_clock = 0.0
 		elif phase == 1:
 			_south_investigate = _south_investigate or creature.state == WaterhouseCreature.State.INVESTIGATE
 			_south_chase = _south_chase or creature.state == WaterhouseCreature.State.CHASE
-			if _south_chase and not covered:
+			if _south_chase and (not covered or creature._has_line_of_sight(player.camera.global_position)):
 				covered = _try_shelter(player, creature, Vector3(-10.0, -6.0, 16.0), -1.0)
 				_cover_seen = _cover_seen or covered
 			if covered and creature.state == WaterhouseCreature.State.SEARCH:
 				_search_after_cover = true
-			if _simulated - phase_started >= 28.0:
+			if _south_chase and _search_after_cover and _quiet_after_retreat:
 				phase = 2
-				phase_started = _simulated
 				_place_swimmer(player, Vector3(9.0, -9.62, -19.2))
 				noise_clock = 0.0
 		elif phase == 2:
 			_north_investigate = _north_investigate or creature.state == WaterhouseCreature.State.INVESTIGATE
 			_north_chase = _north_chase or creature.state == WaterhouseCreature.State.CHASE
-			if _simulated - phase_started >= 29.0:
+			if _north_investigate and _north_chase and _retreats >= 2 and creature.state == WaterhouseCreature.State.DORMANT:
 				phase = 3
 				player.reset_at(Vector3(-21.0, 0.72, 36.0))
 		noise_clock -= delta
@@ -129,7 +129,7 @@ func _run() -> void:
 	Engine.time_scale = 1.0
 	Engine.physics_ticks_per_second = original_ticks
 	Engine.max_physics_steps_per_frame = original_steps
-	_expect(_largest_step <= 0.018 and _simulated >= 119.9, "120 simulated seconds retain native ~1/60-second physics steps")
+	_expect(_largest_step <= 0.018 and _simulated >= 119.9, "at least 120 simulated seconds retain native ~1/60-second physics steps")
 	_expect(_collisions == 0, "head never penetrates real static walls, baffles, platforms or pool floor")
 	_expect(_travel > 70.0 and _longest_stall < 4.0, "patrol/investigation keeps moving without a long obstruction stall")
 	_expect(_patrol_seen, "initial quiet interval naturally transitions to patrol")
@@ -139,7 +139,7 @@ func _run() -> void:
 	_expect(_retreats >= 2 and _quiet_after_retreat, "encounters naturally retreat and restore a quiet interval")
 	print("WORLD METRICS simulated=", snappedf(_simulated, 0.01), " travel=", snappedf(_travel, 0.1), " stall=", snappedf(_longest_stall, 0.01), " overlaps=", _collisions, " clearance_margin_contacts=", _clearance_contacts, " retreat_count=", _retreats, " wall_ms=", Time.get_ticks_msec() - started)
 	print("CREATURE WORLD TESTS: ", _checks - _failures, "/", _checks, " passed")
-	print("LIMIT: stationary high-health fixtures omit player inputs/oxygen and do not certify difficulty or a full human playthrough.")
+	print("LIMIT: scripted high-health fixtures omit player inputs/oxygen and do not certify difficulty or a full human playthrough.")
 	quit(1 if _failures > 0 else 0)
 
 
@@ -152,7 +152,8 @@ func _place_swimmer(player: PlayerController, feet_position: Vector3) -> void:
 func _try_shelter(player: PlayerController, creature: WaterhouseCreature, center: Vector3, side: float) -> bool:
 	var original := player.global_position
 	var capsule := (player.get_node("CollisionShape3D") as CollisionShape3D).shape
-	for offset in [Vector3(0.0, -1.62, side * 1.5), Vector3(side, -1.62, side * 1.5), Vector3(-side, -1.62, side * 1.8), Vector3(side, -1.62, 0.0)]:
+	# Lower eyes below the half-baffle top while keeping feet above the filter platform.
+	for offset in [Vector3(0.0, -2.5, side * 1.5), Vector3(-side, -2.5, side * 1.8), Vector3(0.0, -1.62, side * 1.5), Vector3(side, -1.62, side * 1.5), Vector3(-side, -1.62, side * 1.8), Vector3(side, -1.62, 0.0)]:
 		var point: Vector3 = center + offset
 		if not player._shape_clear(capsule, point):
 			continue

@@ -138,6 +138,9 @@ func _build_navigation() -> void:
 func _pose_body() -> void:
 	if _skeleton == null or _history.is_empty():
 		return
+	if _body_spine != null:
+		_body_spine.pose()
+		return
 	var inverse := _skeleton.global_transform.affine_inverse()
 	var time := float(Time.get_ticks_msec()) * 0.001
 	for bone in _bone_rest.size():
